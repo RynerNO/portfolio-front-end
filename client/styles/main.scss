@@ -1,0 +1,66 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,600&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+body {//#fefafb
+    
+    background-color: #676c77;
+    @apply relative
+}
+.home {
+    height: 100vh;
+    #pt {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+$arrow_color: #4d556b;
+.nextPageArrow {
+    @apply absolute;
+    right: 0;
+
+    width: 150px;
+    height: 150px;
+    &:hover::before {
+        transform: rotateZ(130deg) translateX(25px);
+    }
+    &:hover::after {
+        transform: rotateZ(230deg) translateX(25px);
+    }
+    &::before {
+            content: '';
+            width: 50px;
+            height: 4px;
+            transform: rotateZ(140deg) translateX(25px);
+            display: block;
+          
+            background-color: $arrow_color;
+            position: absolute;
+            top: 39.14%;
+            right: 25%;
+            transition: transform .3s ease-in-out; 
+            
+        }
+    &::after {
+            content: '';
+            width: 50px;
+            height: 4px;
+            transform: rotateZ(220deg) translateX(25px);
+            transition: transform .3s ease-in-out; 
+            display: block;
+            background-color: $arrow_color;
+            position: absolute;
+            top: 40.7%;
+            right: 25%;
+            &:hover {
+                width: 5px;
+            }
+        
+    }
+   
+}
