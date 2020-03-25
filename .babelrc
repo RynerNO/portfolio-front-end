@@ -13,6 +13,7 @@
                 "@models": "./server/models",
                 "@utils": "./client/utils",
                 "@store": "./client/store",
+                "@styles": "./client/styles",
                 "@components": "./client/components",
                 "@pages": "./client/pages",
                 "@config": "./server/config",

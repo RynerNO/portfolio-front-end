@@ -34,13 +34,13 @@ module.exports = {
           'style-loader',
           { loader: 'css-loader', options: { importLoaders: 1 } },
           'postcss-loader',
-          'sass-loader'
+          {loader: 'sass-loader',
+          options: {
+            implementation: require('sass')
+          }}
         ]
       }
     ]
   },
-  plugins: [
-    new Webpack.HotModuleReplacementPlugin(),
-    new VueLoaderPlugin(),
-  ]
+  plugins: [new Webpack.HotModuleReplacementPlugin(), new VueLoaderPlugin()]
 };

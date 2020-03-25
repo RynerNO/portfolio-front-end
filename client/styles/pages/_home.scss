@@ -1,0 +1,42 @@
+.home {
+    @apply flex;
+    @apply items-center;
+    @apply justify-center;
+    height: 100vh;
+ 
+    .home_text {
+        @apply z-20;
+        @apply text-xl;
+        @apply flex;
+        @apply flex-col;
+        h1 {
+            @apply text-center;
+            @apply text-secondary;
+            @apply font-semibold;
+            @apply text-4-5xl;
+            @apply py-3;
+        }
+    }
+    .home_router-link {
+        @apply border-gray-100; 
+        @apply border-2; 
+        @apply self-center; 
+        @apply p-24; 
+        @apply py-6;
+        @apply text-secondary;
+        @apply flex;
+        @apply items-center;
+        @apply justify-center;
+        @apply cursor-pointer;
+        .material-icons {
+            transition: transform .1s ease-out;
+        }
+    }
+    .home_router-link:hover {
+        @apply border-blue;
+        @apply bg-blue;
+        .material-icons {
+            transform: translateX(20px);
+        }
+    }
+}

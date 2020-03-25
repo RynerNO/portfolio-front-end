@@ -1,0 +1,87 @@
+
+@use '../utils/colors' as *;
+
+.about {
+    background-color:#252934;
+    @apply flex;
+    width: 100vw;
+    height: 100vh;
+    .content {
+        z-index: 15;
+        .slide_animate {
+            height: 3px;
+            width: 105px;
+            @apply bg-pink;
+            margin: 0 auto;
+        
+         
+        }
+        
+        .title {
+            margin-top: 150px;
+            margin-bottom: 50px;
+            align-self: center;
+           
+            h1 {
+                @apply text-black;
+                @apply text-4-5xl;
+                @apply font-bold;
+                width: fit-content;
+                animation: slide_text 1s ease-in-out 1;
+                @apply text-pink;
+                
+           
+            }
+    
+           
+        }
+        .text {
+            align-self: center;
+            width: 45%;
+        }
+        .second_title {
+            align-self: center;
+            margin: 30px 0;
+            h2 {
+                @apply text-black;
+                @apply text-4-5xl;
+                @apply font-bold;
+                width: fit-content;
+                animation: slide_text 1s ease-in-out 1;
+                @apply text-pink;
+            }
+        }
+        .skills {
+            width: 85%;
+            align-self: center;
+            @apply flex;
+            @apply flex-wrap;
+            .skill {
+                margin: 16px 0;
+                background-color: $bar_background_color;
+                display: flex;
+                width: 49%;
+                margin-left: 0.8rem;
+                position: relative;
+            span {
+                align-self: flex-end;
+                color: $bar_text_color;
+            }
+            .bar-fill {
+                background-color: $bar_fill_color;
+            
+                max-width: 100%;
+                transition:width 1s ease-in-out;
+                .skill_name {
+                    position: absolute;
+                    top:-100%;
+                    @apply text-center;
+                    @apply font-bold;
+                }
+            }
+            }
+        }
+    }
+ 
+
+}

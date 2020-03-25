@@ -1,0 +1,11 @@
+#pt {
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    @apply absolute;
+    @apply left-0;
+    @apply top-0; 
+    .pt_canvas {
+        z-index: 11;
+    }
+}

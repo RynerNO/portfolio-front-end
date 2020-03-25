@@ -1,10 +1,9 @@
 <template>
-  <div class="flex items-center justify-center">
 
-      <div  id="pt">
+      <div id="pt">
           
       </div>
-  </div>
+
 </template>
 
 <script>
