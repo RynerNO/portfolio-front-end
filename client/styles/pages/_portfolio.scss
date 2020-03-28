@@ -1,0 +1,95 @@
+@use '../utils/mixins';
+
+.portfolio {
+	@apply flex;
+	position: relative;
+	z-index: 15;
+
+	.title {
+		margin-top: 11rem;
+		@include mixins.title('h1', '.underline');
+	}
+
+	.projects {
+		width: 71.5%;
+		margin: 50px auto;
+
+		.project-container {
+			width: 400px;
+			height: 300px;
+            background: url('/site_preview/portfolio.png') no-repeat center /cover;
+            cursor: default;
+			.hover-content {
+                background: rgba(0, 0, 0, 0);
+                position: absolute;
+                box-shadow: 8px 8px #1a202c5c;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                transition: background .3s ease-in-out;
+               
+            }
+            .project-name {
+               width: 100%;
+            }
+            .project-link {
+                transition: opacity .3s ease-in-out;
+                width: 50%;
+                left: 25%;
+                top: 65%;
+                border-color: #04a5ab;
+                &:hover {
+                    background-color: #04a5ab;
+                }
+                
+            }
+			.project-tech {
+                @apply opacity-0;
+                transition: opacity .3s ease-in-out;
+				position: absolute;
+				top: 25%;
+                width: 70%;
+                
+                text-align: center;
+				@apply text-white;
+				@apply text-lg;
+
+				span {
+                  
+					@apply border-pink;
+                    background-color: #272b37;
+                    color: #b1b1b1;
+                    @apply mx-1;
+                    @apply p-1;
+                    @apply uppercase;
+                    @apply font-bold;
+                    @apply text-sm;
+                    @apply px-3;
+                    display: inline-block;
+				}
+			}
+            
+			&:hover {
+           
+                .hover-content {     
+                    background: rgba(0,0,0,.5);
+                    transition: background .3s ease-in-out;
+                }
+                .project-name {
+                    @apply opacity-100;
+                    transition: opacity .3s ease-in-out;
+                }
+                .project-link {
+                    @apply opacity-100;
+                    transition: opacity .3s ease-in-out;
+                    
+                }
+				.project-tech {
+                    @apply opacity-100;
+                    transition: opacity .3s ease-in-out;
+				}
+			}
+		}
+	}
+}

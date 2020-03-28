@@ -1,55 +1,23 @@
 
 @use '../utils/colors' as *;
-
+@use '../utils//mixins';
 .about {
-    background-color:#252934;
-    @apply flex;
+    @apply relative;
+    z-index: 15;
     width: 100vw;
     height: 100vh;
-    .content {
-        z-index: 15;
-        .slide_animate {
-            height: 3px;
-            width: 105px;
-            @apply bg-pink;
-            margin: 0 auto;
-        
-         
-        }
-        
-        .title {
-            margin-top: 150px;
-            margin-bottom: 50px;
-            align-self: center;
-           
-            h1 {
-                @apply text-black;
-                @apply text-4-5xl;
-                @apply font-bold;
-                width: fit-content;
-                animation: slide_text 1s ease-in-out 1;
-                @apply text-pink;
-                
-           
-            }
-    
-           
-        }
+      .title {
+        @include mixins.title('h1', '.underline');
+        margin-top: 10rem;
+        margin-bottom: 3.2rem;
+      }
         .text {
             align-self: center;
             width: 45%;
         }
         .second_title {
-            align-self: center;
-            margin: 30px 0;
-            h2 {
-                @apply text-black;
-                @apply text-4-5xl;
-                @apply font-bold;
-                width: fit-content;
-                animation: slide_text 1s ease-in-out 1;
-                @apply text-pink;
-            }
+            @include mixins.title('h2', '.underline');
+            margin: 2rem 0;
         }
         .skills {
             width: 85%;
@@ -57,7 +25,7 @@
             @apply flex;
             @apply flex-wrap;
             .skill {
-                margin: 16px 0;
+                margin: 1.2rem 0;
                 background-color: $bar_background_color;
                 display: flex;
                 width: 49%;
@@ -69,7 +37,6 @@
             }
             .bar-fill {
                 background-color: $bar_fill_color;
-            
                 max-width: 100%;
                 transition:width 1s ease-in-out;
                 .skill_name {
@@ -81,7 +48,7 @@
             }
             }
         }
-    }
+
  
 
 }
