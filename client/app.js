@@ -2,26 +2,23 @@ import Vue from 'vue';
 
 import Main from './pages/Main.vue';
 
-import './styles/main.scss';
+import './styles/main.global.scss';
 
 import router from './router';
 
 import Router from 'vue-router';
 
-import authMixin from '@mixins/auth';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUser, faBriefcase, faFileAlt, faExternalLinkAlt, faTimes, faFileCode, faHourglass, faEnvelope, faComments, faPaperPlane, faHome} from '@fortawesome/free-solid-svg-icons'
 
-import flashMixin from '@mixins/flash';
-
-import store from '@store';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+ 
+library.add([faUser, faBriefcase, faFileAlt, faHourglass, faExternalLinkAlt,  faTimes, faFileCode, faEnvelope, faComments, faPaperPlane, faHome])
 
 Vue.use(Router);
-
-Vue.mixin(authMixin);
-Vue.mixin(flashMixin);
-
+Vue.component('font-awesome', FontAwesomeIcon)
 const app = new Vue({
   el: '#app',
   router,
-  store,
   render: h => h(Main)
 });

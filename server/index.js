@@ -26,8 +26,7 @@ const app = Express();
 
 app.use(BodyParser.json());
 
-const compiler = Webpack(WebpackConfig);
-
+const compiler  = Webpack(WebpackConfig);
 app.use(
   WebpackDevMiddleware(compiler, {
     hot: true,

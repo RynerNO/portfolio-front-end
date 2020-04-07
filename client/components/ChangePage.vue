@@ -1,38 +1,40 @@
-<template>
-	<div class="changePage pointer-events-none">
-		<div class="pageLoadBar">
+<template lang="pug">
+div(:class='$style.changePage' class="pointer-events-none" )
+	div(:class='$style.pageLoadBar')
+	nav(class="flex flex-col" :class='$style.topNav' )
+		button(class="pointer-events-auto" @click='navOpen = !navOpen' :class="[$style.navButton, navOpen ? $style.navButtonActive : '']")
+			span
+		ul(class="flex flex-col uppercase cursor-pointer" :class="[navOpen ? $style.ulShow : '']")
+			li(:class="currentPage  === 'home' ? $style.active : ''" @click="animateLoadBar('home')")
+				a
+					font-awesome(icon="home")
+					span Home
+					
+			li(:class="currentPage  === 'about' ? $style.active : ''" @click="animateLoadBar('about')")
+				a
+					font-awesome(icon="user" )
+					span About
+				li(:class="currentPage  === 'portfolio' ? $style.active : ''" @click="animateLoadBar('portfolio')") 	
+					a
+						font-awesome(icon="briefcase")
+						span Portfolio
+				li(:class="currentPage  === 'contact' ? $style.active : ''" @click="animateLoadBar('contact')") 	
+					a
+						font-awesome(icon="comments")
+						span Contacts
+		span(:class='[$style.navBg, navOpen ? $style.navBgShow : ""]')
+	nav(class="flex flex-col pointer-events-auto" :class='$style.topNav' )
+		button(@click='navOpen = !navOpen' :class="[$style.navButton, navOpen ? $style.navButtonActive : '']")
+			span
+		span(:class='[$style.navBg, navOpen ? $style.navBgShow : ""]')
+	div(:class="[animate ? $style.nextPageAnimate : '', $style.arrowContainer, $style.previousPage]" @click='previousPage' v-if='pagePrevious')
+		span
+			span {{ pagePrevious }}
+	div(:class="[animate ? $style.nextPageAnimate : '', $style.arrowContainer, $style.nextPage]" @click='nextPage' v-if='pageNext')
+		span
+			span {{ pageNext }}
 
-		</div>
-		<!-- <nav class="topNav flex items-center justify-center">
-    <ul class="flex justify-center uppercase cursor-pointer">
-    <li :class="{ active: page === 'home'}">Home</li>
-    <li :class="{ active: page === 'about'}">About</li>
-    <li>Potfolio</li>
-    <li>Contact</li>
-    </ul>
-  </nav> -->
-		<div
-			class="arrow-container previousPage"
-			:class="{nextPageAnimate: animate}"
-			@click="previousPage"
-			v-if="pagePrevious"
-		>
-			<span>
-				<span>{{ pagePrevious }}</span>
-			</span>
-		</div>
-		<div
-			class="arrow-container nextPage"
-			:class="{nextPageAnimate: animate}"
-			@click="nextPage"
-			v-if="pageNext"
-		>
-			<span>
-				<span>{{ pageNext }}</span>
-			</span>
-		</div>
 
-	</div>
 </template>
 
 <script>
@@ -42,10 +44,15 @@
 		data: () => {
 			return {
 				animate: false,
-				pages: ['home', 'about', 'portfolio'],
+				pages: ['home', 'about', 'portfolio', 'contact'],
+				navOpen: false,
 			}
 		},
 		computed: {
+			currentPage() {
+				const index = this.$route.path === '/' ? 0 : this.pages.indexOf(this.$route.path.replace('/', ''));
+				return this.pages[index]
+			},
 			pagePrevious() {
 				const index = this.pages.indexOf(this.$route.path.replace('/', ''));
 				if (index !== -1 && index !== 0) {
@@ -55,7 +62,6 @@
 				}
 			},
 			pageNext() {
-				console.log(this.$route.path)
 				const index = this.$route.path === '/' ? 0 : this.pages.indexOf(this.$route.path.replace('/', ''));
 				if (index !== -1 && index !== this.pages.length - 1) {
 					return this.pages[index + 1]
@@ -66,8 +72,11 @@
 		},
 		methods: {
 			animateLoadBar(route) {
+				if(route === this.currentPage) {
+					return;
+					}
 				anime({
-					targets: '.pageLoadBar',
+					targets: '.'+this.$style.pageLoadBar,
 					width: '100%',
 					easing: 'easeInOutQuad',
 					duration: 700,
@@ -75,7 +84,7 @@
 						this.$router.push(`/${route}`)
 						this.animate = false;
 						anime({
-							targets: '.pageLoadBar',
+							targets: '.'+this.$style.pageLoadBar,
 							width: '0%',
 							easing: 'easeInOutQuad',
 							duration: 0,
@@ -86,15 +95,17 @@
 			animatePageChangeArrows() {
 				this.animate = !this.animate;
 				anime({
-					targets: '.nextPage',
+					targets: '.'+this.$style.nextPage,
 					translateX: 250,
+					opacity: 0,
 					easing: 'easeInOutQuad',
 					delay: 300,
 					duration: 100
 				})
 				anime({
-					targets: '.previousPage',
+					targets: '.'+this.$style.previousPage,
 					translateX: -250,
+					opacity: 0,
 					easing: 'easeInOutQuad',
 					delay: 300,
 					duration: 100
@@ -110,55 +121,355 @@
 				this.animateLoadBar(this.pagePrevious)
 
 			},
-			scroll(e) {
-				const delta = e.wheelDeltaY;
-				if (!this.animate) {
-					if (delta > 0) {
-						if (this.pagePrevious) {
-							document.getElementsByClassName('main')[0].removeEventListener('wheel', this.scroll);
-							this.previousPage()
-
-						}
-					} else {
-						if (this.pageNext) {
-							document.getElementsByClassName('main')[0].removeEventListener('wheel', this.scroll);
-							this.nextPage()
-
-
-						}
-
-					}
-				}
-			}
 		},
-		destroyed() {
-			document.getElementsByClassName('main')[0].removeEventListener('wheel', this.scroll);
-		},
-		mounted() {
-
-			this.$nextTick(function() {
-				document.getElementsByClassName('main')[0].addEventListener('wheel', this.scroll);
-				anime({
-					targets: '.nextPage',
-					translateX: [250, 0],
-					easing: 'easeInOutQuad',
-					delay: 200,
-					duration: 300
-				})
-
-				anime({
-					targets: '.previousPage',
-					translateX: [-250, 0],
-					easing: 'easeInOutQuad',
-					delay: 200,
-					duration: 300
-				})
-			})
-
-		}
 	}
 </script>
 
-<style>
+<style lang="scss" module>
+	.changePage {
+    @apply fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 15;
+    top: 0;
+    left: 0;
+    .topNav {
+        position: fixed;
+				top: 15px;
+				left:15px;
+				
+				.navButton {
+						width: 50px;
+						height: 50px;
+						outline: none;
+						z-index: 2;
+					span {
+							position: absolute;
+							top: 24px;
+							left: 17px;
+							width: 16px;
+							height: 2px;
+							background: $primary_text;
+							&::before {
+									content: '';
+									position: absolute;
+									top: -6px;
+									left: 0;
+									width: 16px;
+									height: 2px;
+									background: $primary_text;
+									transition: transform .2s ease-in-out;
+							}
+							&::after {
+									content: '';
+									position: absolute;
+									left: 0;
+									top: 6px;
+									width: 16px;
+									height: 2px;
+									background: $primary_text;
+									transition: transform .2s ease-in-out;
+							}
+					}
+				}
+				.navButtonActive {
+					span {
+							background: transparent;
+							transition: background .3s ease-in-out;
+							&::after {
+								transform: rotate(45deg);
+								top: 0;
+								transition: transform .2s ease-in-out;
+							}
+							&::before {
+								transform: rotate(-45deg);
+								top: 0;
+								transition: transform .2s ease-in-out;
+							}
+					}
+				}
+				.navBg {
+					background: #333;
+					position: absolute;
+					left: 0;
+					top: 0;
+					width: 50px;
+					height: 50px;
+					border-radius: 43px;
+					transition: height .3s ease-in-out;
+					outline: none;
+					&.navBgShow {
+						height: 100%;
+						transition: height .3s ease-in-out;
+					}
+				}
+        ul {
+					
+					z-index: 2;
+					padding-top: 0;
+					opacity: 0;
+					&.ulShow {
+						height: auto;
+						opacity: 1;
+						transition: opacity 0.5s ease-in-out;
+						padding-top: 6px;
+						pointer-events: auto;
+						a {
+							span {
+									animation: slideIn 0.55s backwards;
+									transform: translateX(0);
+									transition: transform 0.2s;
+									opacity: 1;
+									display: none;
+									@media(min-width: 1024px) {
+										display: initial;
+									}
+							
+							}
+						}
+						.active { 
+							a {
+								&::before {
+								transform: scaleY(1);
+    						transition: transform 0.7s ease-in-out;
+								}
+							}
+							}
+					
+					}
+            li {
+							a {
+								display: flex;
+								color: rgba(255,255,255,.9);
+								cursor: pointer;
+								justify-content: center;
+								padding-top: 12px;
+								padding-bottom: 12px;
+								position: relative;
+								@media(min-width: 1024px) {
+									padding-left: 70px;
+								}
+								svg {
+										opacity: .6;
+										@media(min-width: 1024px) {
+											position: absolute;
+											left: 16px;
+										}	
+									
+									
+								}
+								span {
+									opacity: 0;
+									transform: translateX(-25px);
+									display: block;
+								}
+								&:hover {
+									color: $secondary;
+									transition: all 0.15s ease-in-out;
+									svg {
+										opacity: 1;
+									}
+								}
+								&::before {
+									content: '';
+									width: 5px;
+									height: 24px;
+									background: $secondary;
+									position: absolute;
+									left: 0;
+									top: 8px;
+									transform: scaleY(0);
+									@media(min-width: 1024px) {
+										left: 45px;
+									}
+								}
+							}
+            }
+            .active {
+							a {
+								color: $secondary;
+								svg {
+									opacity: 1;
+								}
+						}
+						}
+        }
+        
+    }
+    .pageLoadBar {
+        position: fixed;
+        top: 0;
+        height: 3px;
+        width: 0;
+        background: $secondary;
+        @apply z-10;
+    }
+    .arrowContainer{
+        @apply absolute;
+        @apply cursor-pointer;
+        @apply pointer-events-auto;
+        width: 3.5rem;
+				height: 3.5rem;	
+        right: 0;
+				top: 50vh;
+				display: none;
+				@media(min-width: 1024px) {
+					display: flex;
+				}
+        span {
+            @apply block;
+            @apply absolute;
+            top: 20%;
+            right: 55%;
+            width: 8.3rem;
+            height: 3rem;
+            overflow: hidden;
+            span {
+                @apply invisible;
+                @apply uppercase;
+                @apply absolute;
+                @apply font-semibold;
+                @apply text-xl;
+                @apply text-right;
+								right: 0;
+								top: 0;
+                transform: translateX(60px);
+                transition: transform .3s ease-in-out;
+                color: $primary_text;
+    
+            }
+        }
+        &::before {
+                content: '';
+                @include arrow;     
+                transform: rotateZ(140deg) translateX(25px);    
+                top: 39.14%;
+              
+                
+                
+            }
+        &::after {
+                content: '';
+                @include arrow;
+                transform: rotateZ(220deg) translateX(25px);
+                top: 40.7%;
+               
+             
+            
+        }
+        &:hover {
+            span {
+               span {
+                   @apply visible;
+                   transform: translateX(-15px);
+                   transition: transform .3s ease-in-out;
+                   color: $secondary;
+           
+               }
+            }
+            &::before {
+                transform: rotateZ(130deg) translateX(25px);
+                background-color: $secondary;
+            }
+            &::after {
+                transform: rotateZ(230deg) translateX(25px);
+                background-color: $secondary;
+            }
+            @apply visible;
+        }
+       &.nextPageAnimate {
+            span {
+                span {
+                    transition: transform 0.1s linear;
+                    transform: translateX(118px);  
+                }
+            }
+            &::before {
+                transform: rotateZ(180deg) translateX(25px);
+                background-color: $secondary;
+            }
+            &::after {
+                transform: rotateZ(180deg) translateX(25px);
+                background-color: $secondary;
+        
+            }
+       }
+		}
+		.nextPage {
+			//just for anime.js
+			z-index: 5;
+		}
+   .previousPage {
+       left: 0;
+        span {
+            left:71%;
+            overflow: hidden;
+            span {
+                @apply text-left;
+                transform: translateX(-70px);
+                left: 0;
+            }
+				}
+			
+       &::before {
+                transform: rotateZ(40deg) translateX(25px);       
+        }
+        &::after {
+                transform: rotateZ(320deg) translateX(25px);
+            
+        }
+        &:hover {
+						span {
+            		span {
+               			 transform: translateX(3px);
+          		  }
+							}
+			
+            &::before {
+                transform: rotateZ(50deg) translateX(25px);
+            }
+            &::after {
+                transform: rotateZ(310deg) translateX(25px);
 
+            }
+
+        }
+        &.nextPageAnimate {
+                span {
+                    span {
+                        transition: transform 0.1s linear;
+                        transform: translateX(-118px);  
+                    }
+                }
+                &::before {
+										transform: rotateZ(0deg) translateX(25px);
+										background-color: $secondary;
+                }
+                &::after {
+										transform: rotateZ(360deg) translateX(25px);
+										background-color: $secondary;
+                }
+        }
+    }
+}
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translateX(-25px);
+    -moz-transform: translateX(-25px);
+    -ms-transform: translateX(-25px);
+    -o-transform: translateX(-25px);
+    transform: translateX(-25px);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+}
 </style>

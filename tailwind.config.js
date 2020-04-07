@@ -1,7 +1,11 @@
 module.exports = {
   theme: {
+    container: {
+      padding: '2rem',
+    },
     fontFamily: {
-      primary: ['Raleway']
+      primary: ['Poppins'],
+      secondary: ['Open Sans']
     },
     fontSize: {
       '4-5xl': '2.8rem',

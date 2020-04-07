@@ -24,23 +24,61 @@ module.exports = {
       {
         test: /\.vue$/,
 
-        use: {
-          loader: 'vue-loader'
-        }
+        use: [
+          'vue-loader',
+        ]
+      },
+      {
+        test: /\.pug$/,
+        oneOf: [
+          {
+            resourceQuery: /^\?vue/,
+            use: ['pug-plain-loader']
+          }
+        ]
       },
       {
         test: /\.s[ac]ss$/i,
+        exclude: /\.global.scss$/,
         use: [
-          'style-loader',
-          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'vue-style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1, modules: true} },
           'postcss-loader',
           {loader: 'sass-loader',
           options: {
             implementation: require('sass')
-          }}
+            }
+          },
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: ['./client/styles/utils/colors.scss', './client/styles/utils/mixins.scss']
+            },
+          },
+        ]
+      },
+
+      {
+        test: /\.global.scss$/,
+        use: [
+          'vue-style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1} },
+          'postcss-loader',
+          {loader: 'sass-loader',
+          options: {
+            implementation: require('sass')
+            }
+          },
+          {
+            loader: 'sass-resources-loader',
+            options: {
+              resources: ['./client/styles/utils/colors.scss', './client/styles/utils/mixins.scss']
+            },
+          },
         ]
       }
     ]
   },
-  plugins: [new Webpack.HotModuleReplacementPlugin(), new VueLoaderPlugin()]
+  plugins: [new Webpack.HotModuleReplacementPlugin(), new VueLoaderPlugin(),
+   ]
 };

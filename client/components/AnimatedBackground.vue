@@ -1,6 +1,6 @@
 <template>
 
-      <div id="pt">
+      <div id="pt" :class="$style.container">
           
       </div>
 
@@ -10,25 +10,26 @@
 import {CanvasSpace, Pt, Group, Line, Const} from 'pts';
 
 export default {
+data() {
+  return {
+    animateBg: true
+  }
+},
+beforeDestroy() {
+  this.animateBg = false;
+},
 mounted() {
-
-
-
-
-this.$nextTick(function() {
 this.floatySpace(new CanvasSpace('#pt'));
-})
 
 },
 methods: {
 
  floatySpace(space) {
-
   let colors = [
-    "#FF3F8E", "#04C2C9", "#2E55C1"
+    "#2196F3", "#FF5D56", "#FF00FF", "#9ACD32", 
   ];
   let form = space.getForm()
-  space.setup({ bgcolor: "#252934" });
+  space.setup({ bgcolor: "#111217" });
       let pts = new Group();
       let angle, count ,line, mouse, r 
       let i = 0;
@@ -36,21 +37,28 @@ methods: {
   
      
    
-   
+  
   space.add({
-    start:  function(bound, space) {
-        space.autoResize = true
-       
+    start: () => {
+      space.autoResize = true;
     },
-    animate: function(time, fps, context) {
-
+    animate: (time, fps, context) => {
+      if(!this.animateBg){ 
+        
+        space.removeAll()
+        space.clear()
+        space.element.remove()
+        space = null;
+        console.log(space.element)
+        return 
+      }
       i++;
-      if(i >= 15) {
+      if(i >= 25) {
           if(-(window.innerWidth * 0.5) != angle) {
             pts = new Group()
             angle = -(window.innerWidth * 0.5);
-            count = window.innerWidth * 0.05;
-            if (count > 150) count = 150;
+    
+            count = 55;
             line = [new Pt(0, angle), new Pt(space.size.x, 0)]
             mouse = space.pointer
             r =  Math.min(space.size.x, space.size.y);
@@ -64,7 +72,7 @@ methods: {
           }
             i=0
       }
-      pts.rotate2D( Const.one_degree / 20, space.center);
+      pts.rotate2D( Const.one_degree / 60, space.center);
       
       pts.forEach( (pt, i) => { 
         let ln = [pt, Line.perpendicularFromPt(line, pt)] 
@@ -97,9 +105,24 @@ methods: {
   });
 
   space.bindMouse().play();
- 
 }
 
 }
 }
 </script>
+
+<style lang="scss" module>
+
+.container {
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    @apply absolute;
+    @apply left-0;
+    @apply top-0; 
+    .pt_canvas {
+        z-index: 11;
+    }
+}
+
+</style>
