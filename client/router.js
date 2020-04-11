@@ -30,6 +30,14 @@ export default new Router({
     {
       path: '/contact',
       component: Contact
+    },
+    { 
+      path: '/admin',
+      component: () => import('@pages/adminPanel.vue')
+    },
+    {
+      path: '/login',
+      component: () => import('@pages/Login.vue')
     }
 
 

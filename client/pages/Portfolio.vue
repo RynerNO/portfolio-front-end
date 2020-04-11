@@ -7,16 +7,17 @@
 						span portfolio
 					p A few coding projects.&nbsp;&nbsp;Please note these are not my designs.&nbsp;&nbsp;Just the code.
 				div(:class="$style.projects" class="col-span-3 flex flex-wrap")
-					div(:class="$style.projectContainer" v-for="(project, index) of projects" :key="index" @click="showSlide(project.name, project.tech, project.image, project.link)")
+					div(:class="$style.projectContainer" v-for="(project, index) of projects" :key="index" @click="showSlide(project.name, project.tech, project.imageName, project.type, project.duration)")
 						div(:class="$style.project")
-							img(:src="project.image")
+							img(:src="`/site_preview/${project.imageName}`")
 							div(class="flex w-full h-full absolute top-0 left-0 justify-center items-center invisible" :class="$style.projectHover")
-								span NAME
+								span {{ project.name }}
 				button(:class="['rounded-full col-start-2 col-end-3', $style.button]") 
 					span Load More
 			div(:class="[$style.projectInfo, infoSlideActive ? $style.projectInfoActive: '']")
 				div(:class="$style.projectInfoContainer" class="grid grid-cols-3")
-					img(:class="$style.projectInfoImage" :src="slideProps.image" class="col-span-3")
+					div(class="col-span-3" :class="$style.projectInfoImage")
+						img( :src="`/site_preview/${slideProps.image}`" )
 					div(class="col-span-3 flex justify-between items-center")
 						h3(:class="$style.projectInfoTitle") {{ slideProps.name }}
 						button(:class="$style.closeButton" @click="closeSlide")
@@ -28,17 +29,17 @@
 							li 
 								font-awesome(icon='file-alt')
 								span
-									|Project:&nbsp;Website
+									|Project:&nbsp;{{ slideProps.type }}
 							li 
 								font-awesome(icon='hourglass')
 								span
-									|Duration:&nbsp;1 hour
+									|Duration:&nbsp;{{ slideProps.duration }}
 							li 
 								font-awesome(icon="file-code")
 								span
 									|Technologies:&nbsp;{{ slideProps.tech}}
 									
-						router-link(:class="$style.previewButton" to="")
+						a(:class="$style.previewButton" :href="`/site_preview/${slideProps.name.toLowerCase().replace(' ', '_')}/index.html`")
 							span
 								font-awesome(icon="external-link-alt") 
 								| Prewiew
@@ -49,70 +50,48 @@
 <script>
   import anime from 'animejs/lib/anime.es.js';
 	import changePage from '@components/ChangePage.vue';
-	export default {
+	import { GET_PROJECTS } from "@store/projects/actions"
+export default {
+
 		components: {
 			changePage,
 		},
 		data() {
 			return {
-				projects: [{
-					link: '',
-					name: 'TEST',
-					image: '/site_preview/portfolio.png',
-					tech: ['Vue.js', 'Express.js', 'SCSS', 'HUITA']
-                },
-                {
-					link: '',
-					name: 'TEST2',
-					image: '/site_preview/second.png',
-					tech: ['Vue.js', 'Express.js', 'SCSS', 'HUITA']
-                },
-                {
-					link: '',
-					name: '',
-					image: '/site_preview/third.png',
-					tech: ['Vue.js', 'Express.js', 'SCSS', 'HUITA']
-                },
-                {
-					link: '',
-					name: '',
-					image: '/site_preview/fourth.png',
-					tech: ['Vue.js', 'Express.js', 'SCSS', 'HUITA']
-                },
-                  {
-					link: '',
-					name: '',
-					image: '/site_preview/portfolio.png',
-					tech: ['Vue.js', 'Express.js', 'SCSS', 'HUITA']
-                },
-                  {
-					link: '',
-					name: '',
-					image: '/site_preview/second.png',
-					tech: ['Vue.js', 'Express.js', 'SCSS', 'HUITA']
-				}],
+				projects: {},
 				infoSlideActive: false,
 				slideProps: {
 					name: '',
 					tech: '',
 					image: '',
-					link: ''
+					type: '',
+					duration: ''
 				}
 			}
         },
 		methods: {
-			 showSlide(name, tech, image, link) {
-				 tech = tech.join(', ');
+			 showSlide(name, tech, image, type, duration) {
+				 tech = tech.split(',').join(', ');
 				this.slideProps = {
-					name, tech, image, link
+					name: name, 
+					tech: tech, 
+					image: image, 
+					type: type, 
+					duration: duration,
 				}
 				this.infoSlideActive = true;
 			},
 			closeSlide() {
 				this.infoSlideActive = false;
 			}
-		}
+		},
+	created() {
+		this.$store.dispatch(GET_PROJECTS).then(()=> {
+		this.projects = this.$store.state.projects.projects
+
+	})
 	}
+}
 </script>
 
 <style lang="scss" module>
@@ -152,6 +131,9 @@
 		.project {
 			overflow: hidden;
 			position: relative;
+			max-width: 854px;
+    	max-height: 400px;
+
 		}
 		&:hover {
 				.projectHover { 
@@ -195,10 +177,16 @@
 			width: 760px;
 		}
     .projectInfoImage {
-			width:100%;
-			height: auto;
-			display: block;
 			margin: 30px 0;
+			overflow: hidden;
+			max-height: 400px;
+			img {
+				width:100%;
+				height: 100%;
+				display: block;
+			}
+
+			
     }
     .projectInfoContainer {
       position: relative;
@@ -250,6 +238,7 @@
 		.previewButton {
 			@include btn;
 			display: inline-block;
+			border: none;
 		}
 	}
 	 .projectInfoOverlay {

@@ -18,10 +18,10 @@ import path from 'path';
 
 import BodyParser from 'body-parser';
 
-// Mongoose.connect(config.databaseUrl, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true
-// });
+Mongoose.connect(config.databaseUrl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 const app = Express();
 
 app.use(BodyParser.json());
@@ -39,7 +39,11 @@ app.use(v1Router);
 app.use(Express.static(path.resolve(__dirname, 'public')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'public/index.html'));
+
+    res.sendFile(path.resolve(__dirname, 'public/index.html'));
+  
+  
+  
 });
 app.listen(3000, () => {
   console.log('run');
