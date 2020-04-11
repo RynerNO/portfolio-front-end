@@ -1,19 +1,20 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports['default'] = void 0;
+exports["default"] = void 0;
 
-var _express = require('express');
+var _express = require("express");
 
-var _auth = _interopRequireDefault(require('./v1/auth'));
+var _auth = _interopRequireDefault(require("./v1/auth"));
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+var _projects = _interopRequireDefault(require("./v1/projects"));
 
 var v1Router = new _express.Router();
-v1Router.use('api/v1/auth', _auth['default']);
+v1Router.use('/api/v1/auth', _auth["default"]);
+v1Router.use('/api/v1/projects', _projects["default"]);
 var _default = v1Router;
-exports['default'] = _default;
+exports["default"] = _default;

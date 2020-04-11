@@ -6,20 +6,13 @@ import config from '@config';
 
 import v1Router from '@routes';
 
-import Webpack from 'webpack';
-
-import WebpackConfig from '../webpack.config';
-
-import WebpackDevMiddleware from 'webpack-dev-middleware';
-
-import WebpackHotMiddleware from 'webpack-hot-middleware';
-
 import path from 'path';
 
 import BodyParser from 'body-parser';
 
 import compression from 'compression';
 
+import cors from 'cors';
 Mongoose.connect(config.databaseUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -27,16 +20,9 @@ Mongoose.connect(config.databaseUrl, {
 const app = Express();
 
 app.use(BodyParser.json());
-
+app.use(cors())
 app.use(compression());
-const compiler  = Webpack(WebpackConfig);
-app.use(
-  WebpackDevMiddleware(compiler, {
-    hot: true,
-    publicPath: WebpackConfig.output.publicPath
-  })
-);
-app.use(WebpackHotMiddleware(compiler));
+
 app.use(v1Router);
 
 app.use(Express.static(path.resolve(__dirname, 'public')));

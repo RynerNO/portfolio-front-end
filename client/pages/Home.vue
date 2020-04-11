@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       dynamicTitle: '',
-      titles: ['\u00a0hdui', '\u00a0a beginner developer'],
+      titles: ['\u00a0Andrey', '\u00a0a beginner developer'],
       interval: null,
       animate: true,
     };
@@ -60,7 +60,6 @@ export default {
               duration: 1500,
               complete: () => {
                   let i = this.titles.indexOf(this.dynamicTitle)
-                  console.log(i)
                   this.dynamicTitle = (i>=(this.titles.length-1)) ? this.titles[0] : this.titles[i+1]
               }
           })
