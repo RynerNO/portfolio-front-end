@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --ignore './server/public/' --exec babel-node server/index --progress",
+    "prod": "babel-node server/index --prodress",
     "prettier": "prettier --write \"./**/*.js\"",
     "build:client": "webpack --mode=production",
     "build:server": "babel server/ --out-dir dist/ --copy-files",
