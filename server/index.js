@@ -18,6 +18,8 @@ import path from 'path';
 
 import BodyParser from 'body-parser';
 
+import compression from 'compression';
+
 Mongoose.connect(config.databaseUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -26,6 +28,7 @@ const app = Express();
 
 app.use(BodyParser.json());
 
+app.use(compression());
 const compiler  = Webpack(WebpackConfig);
 app.use(
   WebpackDevMiddleware(compiler, {
