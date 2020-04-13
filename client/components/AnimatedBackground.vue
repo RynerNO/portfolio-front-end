@@ -49,7 +49,6 @@ methods: {
         space.clear()
         space.element.remove()
         space = null;
-        console.log(space.element)
         return 
       }
       i++;
@@ -72,7 +71,7 @@ methods: {
           }
             i=0
       }
-      pts.rotate2D( Const.one_degree / 60, space.center);
+      pts.rotate2D( Const.one_degree / 20, space.center);
       
       pts.forEach( (pt, i) => { 
         let ln = [pt, Line.perpendicularFromPt(line, pt)] 

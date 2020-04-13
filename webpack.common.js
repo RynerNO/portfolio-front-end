@@ -1,7 +1,12 @@
 require('dotenv').config();
+const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 module.exports = {
+  output: {
+    path: path.resolve(__dirname, 'dist/public')
+  },
   module: {
+   
     rules: [
       {
         test: /\.js$/,

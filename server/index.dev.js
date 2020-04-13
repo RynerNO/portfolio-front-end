@@ -8,7 +8,7 @@ import v1Router from '@routes';
 
 import Webpack from 'webpack';
 
-import WebpackConfig from '../webpack.config';
+import WebpackConfig from '../webpack.dev';
 
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 
@@ -41,11 +41,11 @@ app.use(
 
 app.use(v1Router);
 
-app.use(Express.static(path.resolve(__dirname, 'public')));
+app.use(Express.static(path.resolve('dist', 'public')));
 
 app.get('*', (req, res) => {
 
-    res.sendFile(path.resolve(__dirname, 'public/index.html'));
+  res.sendFile(path.resolve('dist', 'public/index.html'));
   
   
   

@@ -7,6 +7,6 @@ module.exports = merge(dev, {
   output: {
     filename: 'app.js',
     publicPath: '/',
-    path: path.resolve(__dirname, 'dist/public')
+ 
   },
 });

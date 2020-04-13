@@ -25,6 +25,9 @@ _mongoose["default"].connect(_config["default"].databaseUrl, {
 
 var app = (0, _express["default"])();
 app.use(_bodyParser["default"].json());
+app.use(_bodyParser["default"].urlencoded({
+  extended: false
+}));
 app.use((0, _cors["default"])());
 app.use((0, _compression["default"])());
 app.use(_routes["default"]);

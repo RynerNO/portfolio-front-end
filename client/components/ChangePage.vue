@@ -79,7 +79,7 @@ div(:class='$style.changePage' class="pointer-events-none" )
 					targets: '.'+this.$style.pageLoadBar,
 					width: '100%',
 					easing: 'easeInOutQuad',
-					duration: 700,
+					duration: 300,
 					complete: () => {
 						this.$router.push(`/${route}`)
 						this.animate = false;
@@ -219,6 +219,7 @@ div(:class='$style.changePage' class="pointer-events-none" )
 									animation: slideIn 0.55s backwards;
 									transform: translateX(0);
 									transition: transform 0.2s;
+									width: 50px;
 									opacity: 1;
 									display: none;
 									@media(min-width: 1024px) {

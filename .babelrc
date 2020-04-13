@@ -5,8 +5,8 @@
 
     ],
     "ignore": [
-        "./public",
-      ],
+        "./server/public",
+    ],
     "plugins": [
         ["module-resolver", {
             "root": ["./"], 

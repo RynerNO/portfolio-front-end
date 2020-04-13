@@ -17,6 +17,8 @@ var _fs = _interopRequireDefault(require("fs"));
 
 var _unzipper = _interopRequireDefault(require("unzipper"));
 
+var _express = _interopRequireDefault(require("express"));
+
 var getProjects =
 /*#__PURE__*/
 function () {
@@ -66,13 +68,23 @@ function () {
             imageName = req.files['projectImage'][0];
             archive = req.files['projectArchive'][0];
 
-            _fs["default"].createReadStream('./server/public/site_preview/' + archive.filename).pipe(_unzipper["default"].Extract({
-              path: './server/public/site_preview/' + projectName.toLowerCase().replace(' ', '_')
-            })).on('close', function () {
-              _fs["default"].unlink('./server/public/site_preview/' + archive.filename, function (err) {
-                return;
+            if (process.NODE_ENV !== 'production') {
+              _fs["default"].createReadStream('./dist/public/site_preview/' + archive.filename).pipe(_unzipper["default"].Extract({
+                path: './dist/public/site_preview/' + projectName.toLowerCase().replace(' ', '_')
+              })).on('close', function () {
+                _fs["default"].unlink('./dist/public/site_preview/' + archive.filename, function (err) {
+                  return;
+                });
               });
-            });
+            } else {
+              _fs["default"].createReadStream('/../../public/site_preview/' + archive.filename).pipe(_unzipper["default"].Extract({
+                path: '/../../public/site_preview/' + projectName.toLowerCase().replace(' ', '_')
+              })).on('close', function () {
+                _fs["default"].unlink('/../../public/site_preview/' + archive.filename, function (err) {
+                  return;
+                });
+              });
+            }
 
             _context2.next = 6;
             return (0, _Project["default"])().create({

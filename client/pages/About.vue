@@ -5,21 +5,21 @@
 				div(class="col-span-3"  :class="$style.titleContainer")
 					h2(:class="$style.aboutTitle") about
 						span  me
-					p FGGGGG
-				div(:class="[$style.personalInfo, 'col-span-3']")
-					div
-						ul
-							li(v-for="info of personalInfoColLeft" :key='info.name') 
-								h6 {{ info.name }}:
-									span  {{ info.value }}
-					div
-						ul
-							li(v-for="info of personalInfoColRight" :key='info.name') 
-								h6 {{ info.name }}:
-									span  {{ info.value }}
+					p I love to code.
+				div(:class="['flex flex-wrap col-span-3', $style.personalInfoContainer]")
+					div(:class="$style.aboutmeText")
+						p I'm a beginner developer based in ***REMOVED***, Ukraine. 
+							|Professionally connected with the web development industry and information
+							|technology for 1 year. 
+							|Aiming to leverage my abilities to successfully fit the developer 
+							|role in your company. Well-organised person, problem solver with high attention to detail.
+							
+					
+		
+				div(:class="$style.buttonContainer")
+					a(:class="$style.button" href="/portfolio/resume.pdf" download) 
+						span Download CV
 				
-				button(:class="$style.button") 
-					span Download CV
 				div(class="col-span-3")
 					hr(:class="$style.aboutHr")
 				h2(class="uppercase" :class="$style.skillsTitle") Skills
@@ -30,6 +30,15 @@
 							div(:class="$style.skillKnowledge" :style="{width: skill.percents+'%'}")
 							div(:class="$style.skillPercents" class="font-secondary") {{ skill.percents }}%
 								div
+				h2(class="uppercase" :class="$style.skillsTitle") Languages
+				div(:class="$style.skills" class="col-span-3 flex flex-wrap")
+					div(:class="$style.skill" v-for="lang of languages" :key="lang.name")
+						p {{ lang.name }}
+						div(:class="$style.skillBar")
+							div(:class="$style.skillKnowledge" :style="{width: lang.percents+'%'}")
+							div(:class="$style.skillPercents" class="font-secondary") {{ lang.percents }}%
+								div
+				
 		changePage
 </template>
 
@@ -41,13 +50,14 @@ export default {
   },
 		data() {
 			return {
-				personalInfoColRight:[{
+				personalInfo:[
+				{
 					name: 'First Name',
-					value: 'Hui',
+					value: 'Andrey',
 				},
 				{
 					name: 'Last Name',
-					value: 'Hui',
+					value: '***REMOVED***',
 				},
 				{
 					name: 'Birthdate',
@@ -60,40 +70,38 @@ export default {
 				{
 					name: 'Experience',
 					value: '1 year',
-				}
-				,
+				},
 				{
 					name: 'Address',
-					value: 'Zalupensk',
+					value: '***REMOVED***',
+				},
+		
+				{
+					name: 'Email',
+					value: '***REMOVED***',
+				},
+				{
+					name: 'Skype',
+					value: 'live:ryner.no',
+				},
+		
+				{
+					name: 'Github',
+					value: 'RynerNO',
 				}
+		
 				],
-				personalInfoColLeft:[{
-					name: 'First Name',
-					value: 'Hui',
+				languages: [	{
+					name: 'English',
+					percents: 45,
+				}, 
+				{
+					name: 'Russian',
+					percents: 90
 				},
-				{
-					name: 'Last Name',
-					value: 'Hui',
-				},
-				{
-					name: 'Birthdate',
-					value: '21.10.1998',
-				},
-				{
-					name: 'Nationality',
-					value: 'Ukrainian',
-				},
-				{
-					name: 'Experience',
-					value: '1 year',
-				}
-				,
-				{
-					name: 'Address',
-					value: 'Zalupensk',
-				}
+			
 				],
-				skills: [{
+					skills: [{
 						name: "HTML / CSS",
 						percents: 80,
 					},
@@ -131,45 +139,69 @@ export default {
 		.titleContainer {
 			@include title;
 		}
+
+		.personalInfoContainer {
+			
+			@apply col-span-3;
+			justify-self: center;
+		
+			align-items: center;
+			flex-direction: column;
+		}
+		.aboutmeText {
+			color: $primary_text;
+			width: 80%;
+		}
 		.personalInfo {
 			display: flex;
-			justify-content: center;
-			align-items: center;
-			div {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-				ul {
-						
-						width: 100%;
+			flex-direction: row;
+			
+			width: 50%;
+			padding: 0.3rem 0rem;
+			p {
+					color: $primary_text;
+					width: 100px;
+					text-align:left;
 					
-						li {
-							color: $primary_text;
-							h6 {
-								margin: 15px 0;
-							}
-							span {
-								color: $secondary;
-							}
-						}
-					}
-		}
+			}
+			span,a {
+							color: $secondary;
+							padding-left: 15px;
+							width:120px;
+						}	
+		
 	
+		}
+		.personalInfoEmail {
+				flex-direction: column;
+				p {
+					width: 100%;
+					padding-left: 7px;
+				}
+				span {
+					padding-left: 7px;
+					width: 100%;
+				
+				}
+			}		
+
+	.buttonContainer {
+		@apply col-span-3;
+		@apply flex;
+		justify-content: center;
+		margin: 30px;
+	}		
 	.button {
 		@include btn;
 		margin-top: 2rem;
-		padding: 1rem;
-		padding-left: 2.5rem;
-		padding-right: 2.5rem;
 		width: max-content;
 		height: max-content;
 		border:none;
-		justify-self: center;
-		@apply col-span-3;
+		margin: 10px 15px;
+		
 	}
 	.aboutHr {
-		margin: 72px auto 50px;
+		margin: 25px auto 25px;
 		background: #555;
 		border-top: 1px solid rgba(0,0,0,.1);
 	}

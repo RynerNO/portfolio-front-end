@@ -6,14 +6,25 @@
           h2 get&nbsp;
             span in touch
           p I’m always open to discussing work.
-        div(class="flex" :class="$style.emailContainer")
-          div
+        div(class="flex" :class="$style.contactsContainer")
+          div(class="my-2")
             p 
               font-awesome(icon='envelope')
               |Email
             h6 ***REMOVED***
+          div(class="my-2")
+            p 
+              font-awesome(:icon=['fab', 'skype'])
+              |Skype
+            h6 live:ryner.no
+          div(class="my-2")
+            p 
+              font-awesome(:icon=['fab', 'github'])
+              |Github
+            h6 
+              a(href="https://github.com/RynerNO") RynerNO
         div(:class="$style.formContainer")
-          p If you have any suggestion, project or even you want to say Hello.. please fill out the form below and I will 
+          p If you have any project or job offer, please fill out the form below and I will 
             | reply you shortly. 
           div
             form
@@ -51,14 +62,16 @@ export default {
   .title {
     @include title;
   }
-  .emailContainer {
+  .contactsContainer {
     color: $primary_text;
-    @apply flex-row;
+    @apply flex-col;
     grid-column: span 3 / span 3;
     justify-content: flex-start;
     transition: all 0.5s ease-in-out;
     div {
+      width: 155px;
       display: flex;
+      @apply flex-col;
       p {
         margin-right: 15px;
       }
@@ -88,6 +101,7 @@ export default {
     h6 {
       @apply font-secondary;
       font-weight: 500;
+      width: 100%;
     }
   }
   .formContainer {

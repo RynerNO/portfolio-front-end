@@ -13,13 +13,19 @@ var _multer = _interopRequireDefault(require("multer"));
 
 var _auth = _interopRequireDefault(require("../../middleware/auth"));
 
+var _addProject = _interopRequireDefault(require("../../validators/addProject"));
+
 var _path = _interopRequireDefault(require("path"));
 
 var _projects = _interopRequireDefault(require("../../controllers/v1/projects.controller"));
 
 var storage = _multer["default"].diskStorage({
   destination: function destination(req, file, cb) {
-    cb(null, './server/public/site_preview/');
+    if (process.NODE_ENV !== 'production') {
+      cb(null, _path["default"].resolve('dist', 'public/site_preview/'));
+    } else {
+      cb(null, _path["default"].resolve('./', 'public/site_preview/'));
+    }
   },
   filename: function filename(req, file, cb) {
     cb(null, Date.now() + _path["default"].extname(file.originalname)); //Appending extension
@@ -27,7 +33,16 @@ var storage = _multer["default"].diskStorage({
 });
 
 var upload = (0, _multer["default"])({
-  storage: storage
+  storage: storage,
+  fileFilter: function fileFilter(req, file, cb) {
+    if (file.fieldname === "projectImage" && (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg")) {
+      cb(null, true);
+    } else if (file.fieldname === "projectArchive" && file.mimetype === "application/x-zip-compressed") {
+      cb(null, true);
+    } else {
+      cb(new Error('Unsupported format'), false);
+    }
+  }
 });
 var router = new _express.Router();
 router.get('/get', _projects["default"].getProjects);

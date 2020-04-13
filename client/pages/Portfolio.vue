@@ -5,15 +5,19 @@
 				div(class="col-span-3" :class="$style.titleContainer")
 					h2(:class="$style.title" ) My&nbsp;
 						span portfolio
-					p A few coding projects.&nbsp;&nbsp;Please note these are not my designs.&nbsp;&nbsp;Just the code.
-				div(:class="$style.projects" class="col-span-3 flex flex-wrap")
-					div(:class="$style.projectContainer" v-for="(project, index) of projects" :key="index" @click="showSlide(project.name, project.tech, project.imageName, project.type, project.duration)")
+					p A few coding projects.&nbsp;&nbsp;Please note these are not my designs,&nbsp;&nbsp;just the code.
+				div(:class="$style.portfolioProjectsContainer" class="grid col-span-3")
+					div( :class="$style.projectContainer" v-for="(project, index) of projects" :key="index" @click="showSlide(project.name, project.tech, project.imageName, project.type, project.duration)" )
+						div(:class="$style.projectBar")
+							h2 {{ project.name }}
+							i
 						div(:class="$style.project")
 							img(:src="`/site_preview/${project.imageName}`")
-							div(class="flex w-full h-full absolute top-0 left-0 justify-center items-center invisible" :class="$style.projectHover")
-								span {{ project.name }}
-				button(:class="['rounded-full col-start-2 col-end-3', $style.button]") 
-					span Load More
+							div(class="flex w-full h-full absolute top-0 left-0 justify-center items-center opacity-0" :class="$style.projectHover")
+								div(:class="$style.hoverBg")
+								span(:class="$style.viewMoreButton")
+									span view more...
+			
 			div(:class="[$style.projectInfo, infoSlideActive ? $style.projectInfoActive: '']")
 				div(:class="$style.projectInfoContainer" class="grid grid-cols-3")
 					div(class="col-span-3" :class="$style.projectInfoImage")
@@ -58,7 +62,7 @@ export default {
 		},
 		data() {
 			return {
-				projects: {},
+				projects: [],
 				infoSlideActive: false,
 				slideProps: {
 					name: '',
@@ -95,9 +99,12 @@ export default {
 </script>
 
 <style lang="scss" module>
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700&display=swap');
+body::-webkit-scrollbar {
+  display: none;
+}
 .container {
 	@include container;
-	overflow-x:hidden;
 }
 .slideOut {
 	transform: translateX(-760px);
@@ -111,57 +118,153 @@ export default {
 	
 	}
 
+
+	// page content
+  .portfolioProjectsContainer {
+		grid-template-columns: repeat(1, minmax(0, max-content));
+		@media (min-width: 640px) {	
+			grid-template-columns: repeat(4, minmax(0, max-content));
+		}
+		@media(min-width: 1280px) {
+			grid-template-columns: repeat(3, minmax(0, max-content));
+		}
+	}
 	.projectContainer {
-		max-width: 100%;
+	
 		padding: 0 15px;
 		overflow: hidden;
 		cursor: pointer;
 		margin-bottom: 30px;
 		transition: all 0.5s;
-		@media (min-width: 640px) {
-			max-width: 50%;
+		@apply col-span-1;
+		@media (min-width: 640px) {	
+			@apply col-span-2;
 		}
 		@media(min-width: 1280px) {
-			max-width: 33%;
+			@apply col-span-1;
 		}
 		img {
-			max-width: 100%;
+			width: 100%;
 			height: auto;
 		}
+		.projectBar {
+					background-color: #ddd;
+					height: 24px;
+					color: #6a6a6a;
+					z-index: 10;
+					width: 100%;
+					position: relative;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					border-radius: 8px 8px 0px 0px;
+					h2 {
+						font-weight: 600;
+						font-size: 14px;
+						color: #8a8a8a;
+						align-self: center;
+						font-family: 'Montserrat', sans-serif;
+						
+					}
+					@mixin circle {
+							height: 12px;
+    					width: 12px;
+    					display: inline-block;
+    					background-color: #ff5f57;
+    					border-radius: 50%;
+    					position: absolute;
+    					top: 6px;
+    					left: 10px;
+						}
+					i {
+						@include circle;
+						align-self: start;
+						
+						&::before {
+							content: " ";
+							@include circle;
+    					left: 16px;
+    					background-color: #ffbd2e;
+    					top: 0;
+						}
+						&::after {
+							content: " ";
+							@include circle;
+							left: 32px;
+							background-color: #28ca41;
+    					top: 0;
+						}
+					}
+					}
+		
 		.project {
 			overflow: hidden;
 			position: relative;
-			max-width: 854px;
-    	max-height: 400px;
-
+			max-width: 603px;
+			max-height: 339px;
+			z-index: 10;
+			box-shadow: 8px 8px 0 rgba(0,0,0,.15);
+			border-radius: 0px 0px 8px 8px;
+			@media (min-width: 640px) {	
+				max-width: 415px;
+    		max-height: 233px;
+			}
+			@media(min-width: 1280px) {
+				max-width: 350px;
+    		max-height: 197px;
+			}
+			
 		}
 		&:hover {
 				.projectHover { 
-						visibility: visible;
+						
+						opacity: 1;
+						.projectHoverSlide {
+							transition-duration: 0.4s;
+							transform: translateY(0);
+						}	
 				}
 			}
 		.projectHover {
-			background: $secondary;
-	
-			span {
-					color: $primary_text;
-					font-weight: 500;
-					font-size: 20px;
+			transition-duration: 0.5s;	
+			
+							.hoverBg {
+								position: absolute;
+								z-index: 2;
+								top:0;
+								left:0;
+								width: 100%;
+								height: 100%;
+								background-color: rgba(10,10,10,.7);
+								background-blend-mode: luminosity;
+						
+					}
+						
+				
+					.viewMoreButton {
+						font-weight: 500;
+						font-size: 15px;
+						@include btn;	
+      			color: $secondary;
+						background-color: initial;
+						z-index: 5;
+      			&::before {
+        		 	background-color: $secondary;
+     				}
+      			&:hover {
+        			color: $primary_text;
+        		&::before {
+              background-color: $secondary;
+              width: 180%;
+        		}
+      	}
+    
 				}
 			
 		}
 	}
-	.button {
-				@include btn;
-				margin-top: 2rem;
-				padding: 1rem;
-				padding-left: 2.5rem;
-				padding-right: 2.5rem;
-				width: max-content;
-				height: max-content;
-				border:none;
-				justify-self: center;
-	}
+	// ************************************************************
+	// infoSlide
 	 .projectInfo {
     width: 100%;
     height: 100%;
@@ -180,9 +283,11 @@ export default {
 			margin: 30px 0;
 			overflow: hidden;
 			max-height: 400px;
+			border-radius: 6px;
 			img {
 				width:100%;
-				height: 100%;
+				
+				height: auto;
 				display: block;
 			}
 
@@ -264,5 +369,5 @@ export default {
 		transition: right .4s ease-in-out;
 		
 	}
-
+// ***************************************************************
 </style>

@@ -11,7 +11,7 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var _user = _interopRequireDefault(require("../../models/user"));
+var _User = _interopRequireDefault(require("../../models/User"));
 
 var login =
 /*#__PURE__*/
@@ -27,7 +27,7 @@ function () {
           case 0:
             _req$body = req.body, username = _req$body.username, password = _req$body.password;
             _context.next = 3;
-            return (0, _user["default"])().findOne({
+            return (0, _User["default"])().findOne({
               name: username
             });
 

@@ -20,6 +20,9 @@ Mongoose.connect(config.databaseUrl, {
 const app = Express();
 
 app.use(BodyParser.json());
+app.use(BodyParser.urlencoded({
+  extended: false
+}));
 app.use(cors())
 app.use(compression());
 

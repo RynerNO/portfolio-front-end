@@ -8,21 +8,21 @@
           span(:class="$style.dynamicTitle" class="overflow-hidden")
             |{{ dynamicTitle }}
       p(class='font-secondary')
-        |I'm a Freelance UI/UX Designer and Developer based in London,
-        |England. I strives to build immersive and beautiful web applications through carefully crafted code and 
-        |user-centric design
+        |I'm a beginner Front-End Developer based in ***REMOVED***, Ukraine. 
+        |Professionally connected with the web development industry and information
+        |technology for 1 year. 
       div(class="flex my-5" :class="$style.buttons")
-        router-link(to="/about" class="mx-2 " :class="[$style.btn, $style.about]")
+        button(@click="$refs.animateProgress.animateLoadBar('about')" class="mx-2 " :class="[$style.btn, $style.about]")
           span
             font-awesome(icon="user" class="mx-2")
             |More About Me
-        router-link(to="/portfolio" class="mx-2 " :class="[$style.btn, $style.portfolio]") 
+        button(@click="$refs.animateProgress.animateLoadBar('portfolio')" class="mx-2 " :class="[$style.btn, $style.portfolio]") 
           span
             font-awesome(icon="briefcase" class="mx-2")
             |My Projects
       
     animatedBackground
-    changePage
+    changePage(ref="animateProgress")
 </template>
 
 <script>
