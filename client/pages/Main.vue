@@ -1,5 +1,5 @@
 <template lang="pug">
-  main(class="font-primary main")
+  main(class="font-primary main h-full")
     transition(   v-bind:css="false"   
                   v-on:enter="enter"
                   v-on:leave="leave"
