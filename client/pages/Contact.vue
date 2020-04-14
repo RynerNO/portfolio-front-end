@@ -27,23 +27,29 @@
           p If you have any project or job offer, please fill out the form below and I will 
             | reply you shortly. 
           div
-            form
-              
-              div(class="w-full flex flex-wrap justify-center" :class="$style.topInputs" )
-                div(:class="$style.inputContainer")
-                  font-awesome(icon='user')
-                  input(placeholder="Your name" type="text" v-model="message.name")
-                div(:class="$style.inputContainer")
-                  font-awesome(icon='envelope')
-                  input(placeholder="Your email" type="email" v-model="message.email")
-              div(:class="$style.inputContainer" class="w-full")
-                font-awesome(icon='comments')
-                textarea(placeholder="Your message" v-model="message.text")
-              div(class="w-full")
-                span(v-if="messageSendSuccess" class="px-12 text-green-600") Message Sent
-                span(v-if="messageSendError" class="px-12 text-red-600") Error
-              vue-recaptcha(class="px-8" sitekey="6Lc0U-kUAAAAAEZG5FkRnyQl5ZsE5beJAmUktGHi" :loadRecaptchaScript="true" @verify="sendMessage($event)")
-                button(:class="$style.button") 
+            ValidationObserver(v-slot="{ invalid, reset}" ref="observer")
+              form 
+                div(class="w-full flex flex-wrap justify-center" :class="$style.topInputs" )
+                  div(:class="$style.inputContainer")
+                    ValidationProvider(name="Name" rules="required" v-slot="{errors}")
+                      font-awesome(icon='user')
+                      input(placeholder="Your name" type="text" v-model="message.name")
+                      span(class='px-2 text-red-600 text-lg w-full') {{ errors[0] }}
+                  div(:class="$style.inputContainer")
+                    ValidationProvider(name="Email" rules="required|email" v-slot="{errors}")
+                      font-awesome(icon='envelope')
+                      input(placeholder="Your email" type="email" v-model="message.email")
+                      span(class='px-2 text-red-600 text-lg w-full') {{ errors[0] }}
+                div(:class="$style.inputContainer" class="w-full")
+                  ValidationProvider(name="Message" rules="required" v-slot="{errors}")
+                    font-awesome(icon='comments')
+                    textarea(placeholder="Your message" v-model="message.text")
+                    span(class='px-2 text-red-600 text-lg w-full') {{ errors[0] }}
+                div(class="w-full")
+                  span(v-if="messageSendSuccess" class="px-12 text-green-600") Message Sent
+                  span(v-if="messageSendError" class="px-12 text-red-600") Error
+                vue-recaptcha( ref="recaptcha" class="px-6 py-2" sitekey="6LcBvXkUAAAAAAKYtJBXQtBQHwOUiG_rq3nOxsFi" :loadRecaptchaScript="true" @verify="setToken($event)" @expired="unsetToken()")
+                button(:class="$style.button" :disabled="(invalid||failCaptcha)" @click.prevent="sendMessage") 
                   span 
                     font-awesome(icon='paper-plane')
                     |send message
@@ -51,13 +57,35 @@
 </template>
 
 <script>
+import {
+  ValidationProvider,
+  extend,
+  ValidationObserver,
+  localize
+} from 'vee-validate';
+import { required, email } from 'vee-validate/dist/rules';
+
+
+extend('required', required);
+extend('email', email);
+
+localize({
+  en: {
+    messages: {
+      required: 'this field is required',
+      email: 'email is not valid'
+    }
+  }
+});
 import changePage from '@components/ChangePage.vue';
 import axios from '@utils/axios'
 import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: {
     changePage, 
-    VueRecaptcha
+    VueRecaptcha,
+     ValidationProvider,
+  ValidationObserver,
   },
   data() {
     return {
@@ -69,17 +97,28 @@ export default {
       },
       messageSendSuccess: false,
       messageSendError: false,
+      failCaptcha: true
     }
   },
   methods: {
+    unsetToken() {
+      this.message.token = '',
+      this.failCaptcha = true;
+    },
+    setToken(event) {
+      this.message.token = event;
+      this.failCaptcha = false;
+    },
     sendMessage(token) {
-      this.message.token = token;
       axios.post('sendMessage', this.message).then(response => {
+        this.$refs.observer.reset()
         this.message.name = '';
         this.message.email = '';
         this.message.text = '';
         this.messageSendSuccess = true;
         this.token = '';
+        this.failCaptcha = true;
+        this.$refs.recaptcha.reset()
         setTimeout(()=> {
           this.messageSendSuccess = false;
         }, 5000)
@@ -89,6 +128,8 @@ export default {
         this.message.email = '';
         this.message.text = '';
         this.token = '';
+        this.failCaptcha = true;
+        this.$refs.recaptcha.reset()
         setTimeout(()=> {
           this.messageSendError = false;
         }, 5000)
@@ -206,10 +247,15 @@ export default {
      
     }
      .button {
+      
         @include btn;
         margin: 0 15px;
         margin-top: 2rem;
         border: none;
+         &:disabled {
+         background: #555;
+         cursor: default;
+       }
         svg {
           margin-right: 10px;
         }
