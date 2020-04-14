@@ -1,5 +1,5 @@
 <template lang="pug">
-	section
+	section(class="h-full")
 		div(class="mx-auto" :class="$style.container")
 			div(class="grid grid-cols-3" :class="[infoSlideActive ? $style.slideOut: $style.slideInavtive]")
 				div(class="col-span-3" :class="$style.titleContainer")

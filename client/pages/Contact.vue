@@ -28,30 +28,74 @@
             | reply you shortly. 
           div
             form
+              
               div(class="w-full flex flex-wrap justify-center" :class="$style.topInputs" )
                 div(:class="$style.inputContainer")
                   font-awesome(icon='user')
-                  input(placeholder="Your name" type="text")
+                  input(placeholder="Your name" type="text" v-model="message.name")
                 div(:class="$style.inputContainer")
                   font-awesome(icon='envelope')
-                  input(placeholder="Your email" type="email")
+                  input(placeholder="Your email" type="email" v-model="message.email")
               div(:class="$style.inputContainer" class="w-full")
                 font-awesome(icon='comments')
-                textarea(placeholder="Your message")
-              button(:class="$style.button")
-                
-                span 
-                  font-awesome(icon='paper-plane')
-                  |send message
+                textarea(placeholder="Your message" v-model="message.text")
+              div(class="w-full")
+                span(v-if="messageSendSuccess" class="px-12 text-green-600") Message Sent
+                span(v-if="messageSendError" class="px-12 text-red-600") Error
+              vue-recaptcha(class="px-8" sitekey="6Lc0U-kUAAAAAEZG5FkRnyQl5ZsE5beJAmUktGHi" :loadRecaptchaScript="true" @verify="sendMessage($event)")
+                button(:class="$style.button") 
+                  span 
+                    font-awesome(icon='paper-plane')
+                    |send message
     changePage
 </template>
 
 <script>
 import changePage from '@components/ChangePage.vue';
+import axios from '@utils/axios'
+import VueRecaptcha from 'vue-recaptcha'
 export default {
   components: {
-    changePage
+    changePage, 
+    VueRecaptcha
   },
+  data() {
+    return {
+      message: {
+        name: '',
+        email: '',
+        text: '',
+        token: ''
+      },
+      messageSendSuccess: false,
+      messageSendError: false,
+    }
+  },
+  methods: {
+    sendMessage(token) {
+      this.message.token = token;
+      axios.post('sendMessage', this.message).then(response => {
+        this.message.name = '';
+        this.message.email = '';
+        this.message.text = '';
+        this.messageSendSuccess = true;
+        this.token = '';
+        setTimeout(()=> {
+          this.messageSendSuccess = false;
+        }, 5000)
+      }).catch(error => {
+        this.messageSendError = true;
+        this.message.name = '';
+        this.message.email = '';
+        this.message.text = '';
+        this.token = '';
+        setTimeout(()=> {
+          this.messageSendError = false;
+        }, 5000)
+        
+      })
+    }
+  }
 }
 </script>
 

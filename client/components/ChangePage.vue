@@ -5,20 +5,20 @@ div(:class='$style.changePage' class="pointer-events-none" )
 		button(class="pointer-events-auto" @click='navOpen = !navOpen' :class="[$style.navButton, navOpen ? $style.navButtonActive : '']")
 			span
 		ul(class="flex flex-col uppercase cursor-pointer" :class="[navOpen ? $style.ulShow : '']")
-			li(:class="currentPage  === 'home' ? $style.active : ''" @click="animateLoadBar('home')")
+			li(:class="currentPage  === 'home' ? $style.active : ''" @click.once="animateLoadBar('home')")
 				a
 					font-awesome(icon="home")
 					span Home
 					
-			li(:class="currentPage  === 'about' ? $style.active : ''" @click="animateLoadBar('about')")
+			li(:class="currentPage  === 'about' ? $style.active : ''" @click.once="animateLoadBar('about')")
 				a
 					font-awesome(icon="user" )
 					span About
-				li(:class="currentPage  === 'portfolio' ? $style.active : ''" @click="animateLoadBar('portfolio')") 	
+				li(:class="currentPage  === 'portfolio' ? $style.active : ''" @click.once="animateLoadBar('portfolio')") 	
 					a
 						font-awesome(icon="briefcase")
 						span Portfolio
-				li(:class="currentPage  === 'contact' ? $style.active : ''" @click="animateLoadBar('contact')") 	
+				li(:class="currentPage  === 'contact' ? $style.active : ''" @click.once="animateLoadBar('contact')") 	
 					a
 						font-awesome(icon="comments")
 						span Contacts
@@ -27,10 +27,10 @@ div(:class='$style.changePage' class="pointer-events-none" )
 		button(@click='navOpen = !navOpen' :class="[$style.navButton, navOpen ? $style.navButtonActive : '']")
 			span
 		span(:class='[$style.navBg, navOpen ? $style.navBgShow : ""]')
-	div(:class="[animate ? $style.nextPageAnimate : '', $style.arrowContainer, $style.previousPage]" @click='previousPage' v-if='pagePrevious')
+	div(:class="[animate ? $style.nextPageAnimate : '', $style.arrowContainer, $style.previousPage]" @click.once='previousPage' v-if='pagePrevious')
 		span
 			span {{ pagePrevious }}
-	div(:class="[animate ? $style.nextPageAnimate : '', $style.arrowContainer, $style.nextPage]" @click='nextPage' v-if='pageNext')
+	div(:class="[animate ? $style.nextPageAnimate : '', $style.arrowContainer, $style.nextPage]" @click.once='nextPage' v-if='pageNext')
 		span
 			span {{ pageNext }}
 

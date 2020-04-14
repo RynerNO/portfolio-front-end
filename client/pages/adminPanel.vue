@@ -1,6 +1,6 @@
 <template lang="pug">
   div(:class="$style.adminPanelContainer")
-    header
+    header(:class="$style.mainHeader")
     aside
     section
     component(v-bind:is='currentComponent')
@@ -38,6 +38,9 @@ export default {
 <style lang="scss" module>
   .adminPanelContainer {
     display: grid;
+
+  }
+  .mainHeader {
     
   }
  </style>

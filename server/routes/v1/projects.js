@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
 import authMiddleware from '@middleware/auth'
-import addProjectValidator from '@validators/addProject';
 import path from 'path';
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
