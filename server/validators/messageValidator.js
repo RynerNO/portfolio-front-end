@@ -17,15 +17,18 @@ export default (req, res, next) => {
   
       axios.post(url)
         .then(response => {
+          console.log(response)
           if (response.data.success) {
+           
             next()
           } else {
-            res.json({
+
+            res.status(422).json({
               'error': 'Capthca Failed'
             })
           }
         })
-        .catch(error => res.json({
+        .catch(error => res.status(422).json({
             error
           })); 
       

@@ -48,9 +48,11 @@ v1Router.post('/api/v1/sendMessage', messageValidator, function (req, res) {
 };
 transport.sendMail(message, function(err, info) {
     if (err) {
-      console.log(err)
+      res.status(422).json({
+        err
+      })
     } else {
-      res.json({
+      res.status(200).json({
         'status': 'success',
       })
     }
