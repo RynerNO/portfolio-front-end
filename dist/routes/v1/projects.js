@@ -13,8 +13,6 @@ var _multer = _interopRequireDefault(require("multer"));
 
 var _auth = _interopRequireDefault(require("../../middleware/auth"));
 
-var _addProject = _interopRequireDefault(require("../../validators/addProject"));
-
 var _path = _interopRequireDefault(require("path"));
 
 var _projects = _interopRequireDefault(require("../../controllers/v1/projects.controller"));

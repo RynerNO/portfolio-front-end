@@ -13,12 +13,8 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _User = _interopRequireDefault(require("../../models/User"));
 
-var login =
-/*#__PURE__*/
-function () {
-  var _ref = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee(req, res) {
+var login = /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
     var _req$body, username, password, user, token;
 
     return _regenerator["default"].wrap(function _callee$(_context) {

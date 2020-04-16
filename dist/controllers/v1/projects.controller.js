@@ -19,12 +19,8 @@ var _unzipper = _interopRequireDefault(require("unzipper"));
 
 var _express = _interopRequireDefault(require("express"));
 
-var getProjects =
-/*#__PURE__*/
-function () {
-  var _ref = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee(req, res) {
+var getProjects = /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
     var projects;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
@@ -52,12 +48,8 @@ function () {
   };
 }();
 
-var addProject =
-/*#__PURE__*/
-function () {
-  var _ref2 = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee2(req, res) {
+var addProject = /*#__PURE__*/function () {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res) {
     var _req$body, projectName, projectTech, projectType, projectDuration, imageName, archive;
 
     return _regenerator["default"].wrap(function _callee2$(_context2) {

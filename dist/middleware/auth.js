@@ -17,12 +17,8 @@ var _User = _interopRequireDefault(require("../models/User"));
 
 var _config = _interopRequireDefault(require("../config"));
 
-var _default =
-/*#__PURE__*/
-function () {
-  var _ref = (0, _asyncToGenerator2["default"])(
-  /*#__PURE__*/
-  _regenerator["default"].mark(function _callee(req, res, next) {
+var _default = /*#__PURE__*/function () {
+  var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
     var token, data, user;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
