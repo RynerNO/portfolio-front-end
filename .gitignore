@@ -1,10 +1,11 @@
 node_modules/
 
 dist/**
-!dist/public/index.html
-!dist/public/favicon.ico
+
 !dist/public
 dist/public/**
+!dist/public/index.html
+!dist/public/favicon.ico
 !dist/public/site_preview
 !dist/public/portfolio
 !dist/public/site_preview/**

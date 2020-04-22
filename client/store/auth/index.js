@@ -13,7 +13,7 @@ try {
   
 } catch (e) {
   initialState = {
-    user: null,
+    
     token: null,
     status: false
   };

@@ -41,6 +41,7 @@
     "pts": "^0.9.1",
     "randomstring": "^1.1.5",
     "sass-loader": "^8.0.2",
+    "uniqid": "^5.2.0",
     "unzipper": "^0.10.10",
     "uuid": "^7.0.2",
     "vee-validate": "^3.2.5",

@@ -297,10 +297,13 @@ body::-webkit-scrollbar {
       position: relative;
 			padding: 0 30px;
 		.projectInfoTitle {
-			font-size: 34px;
+			font-size: 20px;
 			margin: 0 0 22px 0;
 			font-weight: 700;
 			color: $secondary;
+			@media(min-width: 400px) {
+				font-size: 27px;
+			}
 		}
 		.projectInfoText {
 			justify-items: center;
@@ -320,11 +323,16 @@ body::-webkit-scrollbar {
 		.closeButton {
 			@include btn;
 			background-color: initial;
-			padding: 0 2rem;
+			padding: 0 1.5rem;
 			font-size: 15px;
-			height: 36px;
+			height: 31px;
+			
 			margin: 0 0 22px 0;
 			transition: height, padding .5s ease-in-out;
+			@media(min-width: 400px) {
+			height: 36px;
+			padding: 0 2rem;
+			}
 			@media(min-width: 640px) {
 				height: 46px;
 				padding: 0 3rem;

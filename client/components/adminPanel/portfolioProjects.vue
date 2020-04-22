@@ -1,9 +1,12 @@
 <template lang="pug">
   div(:class="$style.portfolioProjectsContainer")
-    div(:class='$style.projects')
-      div(:class='$style.project' v-for="(project, index) of projects" :key="index")
+    div(v-show="!showModalAddProject" :class='$style.projects')
+      div(:class='$style.project' v-for="(project, index) of projects" :key="index" @click="showSlide(project.name, project.tech, project.imageName, project.type, project.duration)")
+        div(:class="$style.projectBar")
+            h2 {{ project.name }}
+            i
         img(:src="`/site_preview/${project.imageName}`")
-    button(:class='[$style.successButton, $style.addPageBtn]' @click="showModalAddProject = !showModalAddProject") New Project
+    button(v-if="!showModalAddProject" :class='[$style.successButton, $style.addPageBtn]' @click="showModalAddProject = !showModalAddProject") New Project
 
     validation-observer(ref="form" v-slot="{ handleSubmit }")
       form(v-if="showModalAddProject" :class='$style.addProjectForm' @submit.prevent="handleSubmit(addProject)")
@@ -37,7 +40,37 @@
           )
         
         button(:class='[$style.SubmitBtn, $style.successButton]' type="submit") Submit Project
-      
+    button(v-if="showModalAddProject" :class='[$style.successButton, $style.addPageBtn]' @click="showModalAddProject = !showModalAddProject") Show Projects   
+    div(:class="[$style.projectInfo, infoSlideActive ? $style.projectInfoActive: '']")
+      div(:class="$style.projectInfoContainer" class="grid grid-cols-3")
+        div(class="col-span-3" :class="$style.projectInfoImage")
+          img( :src="`/site_preview/${slideProps.image}`" )
+        div(class="col-span-3 flex justify-between items-center")
+          h3(:class="$style.projectInfoTitle") {{ slideProps.name }}
+          button(:class="$style.closeButton" @click="closeSlide")
+            span
+              font-awesome(icon="times")
+              |&nbsp;close
+        div(:class="$style.projectInfoText" class="col-span-3")
+          ul(class="")
+            li 
+              font-awesome(icon='file-alt')
+              span
+                |Project:&nbsp;{{ slideProps.type }}
+            li 
+              font-awesome(icon='hourglass')
+              span
+                |Duration:&nbsp;{{ slideProps.duration }}
+            li 
+              font-awesome(icon="file-code")
+              span
+                |Technologies:&nbsp;{{ slideProps.tech}}
+                
+          a(:class="$style.previewButton" :href="`/site_preview/${slideProps.name.toLowerCase().replace(' ', '_')}/index.html`")
+            span
+              font-awesome(icon="external-link-alt") 
+              | Prewiew
+    div(:class="[$style.projectInfoOverlay, infoSlideActive ? $style.projectInfoOverlayActive : '']" @click="closeSlide")
 </template>
 
 <script>
@@ -88,7 +121,15 @@ data() {
     },
     response: '',
     error: '',
-    showModalAddProject: false
+    showModalAddProject: false,
+    slideProps: {
+					name: '',
+					tech: '',
+					image: '',
+					type: '',
+					duration: ''
+        },
+    infoSlideActive: true,
    
   }
 },
@@ -107,8 +148,23 @@ methods: {
     formData.append('projectName', this.newProject.name)
     formData.append('projectTech', this.newProject.tech.replace(' ', '').split(','))
     this.$store.dispatch(POST_ADD, formData)
+  },
+	showSlide(name, tech, image, type, duration) {
+    tech = tech.split(',').join(', ');
+    this.slideProps = {
+      name: name, 
+      tech: tech, 
+      image: image, 
+      type: type, 
+      duration: duration,
+    }
+    this.infoSlideActive = true;
+  },
+  closeSlide() {
+    this.infoSlideActive = false;
   }
-}
+},
+
 }
 </script>
 
@@ -152,7 +208,78 @@ methods: {
   align-self: flex-end;
   margin: 1rem 0;
 }
-  .portfolioProjectsContainer {
+.projects {
+  width: 100%;
+  margin-top: 50px;
+  .project {
+			overflow: hidden;
+			position: relative;
+			max-width: 603px;
+			max-height: 339px;
+			z-index: 10;
+			box-shadow: 8px 8px 0 rgba(0,0,0,.15);
+			border-radius: 0px 0px 8px 8px;
+			@media (min-width: 640px) {	
+				max-width: 415px;
+    		max-height: 233px;
+			}
+			@media(min-width: 1280px) {
+				max-width: 350px;
+    		max-height: 197px;
+			}
+			
+    }
+    .projectBar {
+					background-color: #ddd;
+					height: 24px;
+					color: #6a6a6a;
+					z-index: 10;
+					width: 100%;
+					position: relative;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					border-radius: 8px 8px 0px 0px;
+					h2 {
+						font-weight: 600;
+						font-size: 14px;
+						color: #8a8a8a;
+						align-self: center;
+						font-family: 'Montserrat', sans-serif;
+						
+					}
+					@mixin circle {
+							height: 12px;
+    					width: 12px;
+    					display: inline-block;
+    					background-color: #ff5f57;
+    					border-radius: 50%;
+    					position: absolute;
+    					top: 6px;
+    					left: 10px;
+						}
+					i {
+						@include circle;
+						align-self: start;
+						
+						&::before {
+							content: " ";
+							@include circle;
+    					left: 16px;
+    					background-color: #ffbd2e;
+    					top: 0;
+						}
+						&::after {
+							content: " ";
+							@include circle;
+							left: 32px;
+							background-color: #28ca41;
+    					top: 0;
+						}
+					}
+					}
+}
+.portfolioProjectsContainer {
     padding-top: 64px;
     display: flex;
     flex-direction: column;
@@ -166,6 +293,7 @@ methods: {
     flex-direction: column;
     background: #fff;
     padding: 5px 15px;
+    margin-top: 50px;
     p {
       padding-bottom: 5px;
       border-bottom: 1px solid #E6E6F2;
@@ -188,4 +316,110 @@ methods: {
       margin-bottom: 15px;
     }
   }
+	// infoSlide
+	 .projectInfo {
+    width: 100%;
+    height: 100%;
+    color: $primary_text;
+    position: fixed;
+    top: 0;
+		z-index: 17;
+		background: #333;
+		right: -100%;
+		transition: all .4s ease-in-out;
+		visibility: hidden;
+		@media(min-width: 1024px) {
+			width: 760px;
+		}
+    .projectInfoImage {
+			margin: 30px 0;
+			overflow: hidden;
+			max-height: 400px;
+			border-radius: 6px;
+			img {
+				width:100%;
+				
+				height: auto;
+				display: block;
+			}
+
+			
+    }
+    .projectInfoContainer {
+      position: relative;
+			padding: 0 30px;
+		.projectInfoTitle {
+			font-size: 34px;
+			margin: 0 0 22px 0;
+			font-weight: 700;
+			color: $secondary;
+		}
+		.projectInfoText {
+			justify-items: center;
+			
+			ul {
+				margin-bottom: 20px;
+				li {
+					width: 100%;
+					margin-bottom: 20px;
+					svg {
+						margin-right: 15px;
+						
+					}
+				}
+			}
+		}
+		.closeButton {
+			@include btn;
+			background-color: initial;
+			padding: 0 2rem;
+			font-size: 15px;
+			height: 36px;
+			margin: 0 0 22px 0;
+			transition: height, padding .5s ease-in-out;
+			@media(min-width: 640px) {
+				height: 46px;
+				padding: 0 3rem;
+		}
+			
+			color: $secondary;
+			&::before {
+				background-color: $secondary;
+			}
+			&:hover {
+				color: $primary_text;
+			}
+		}
+    }
+   
+		.previewButton {
+			@include btn;
+			display: inline-block;
+			border: none;
+		}
+	}
+	 .projectInfoOverlay {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.78);
+			z-index: 16;
+			display: none;
+		}
+	.projectInfoOverlayActive {
+			display: none;
+			@media(min-width: 1024px) {
+				display: inherit;
+			}
+			
+	}
+	.projectInfoActive {
+		visibility: visible;
+		right: 0;
+		transition: right .4s ease-in-out;
+		
+	}
+// ***************************************************************
 </style>
