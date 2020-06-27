@@ -1,0 +1,115 @@
+=btn
+  border: 1px solid $secondary
+  text-transform: uppercase
+  font-weight: 500
+  color: $primary_text
+  position: relative
+  overflow: hidden
+  background-color: $secondary
+  padding: 0.5rem
+  padding-left: 1.5rem
+  padding-right: 1.5rem
+
+  @apply rounded-full
+
+  &:focus
+    outline: none
+
+  span
+    position: relative
+    z-index: 2
+
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: -53%
+    width: 10%
+    height: 112%
+    z-index: 1
+    transition-duration: .6s
+    transform: skew(-22deg)
+    background-color: #555
+
+  &:hover
+    &::before
+      width: 180%
+
+=title
+  @apply flex
+
+  @apply flex-col
+
+  @apply items-center
+
+  margin: 56px 0
+
+  h2
+    font-size: 33px
+    color: $primary_text
+    font-weight: 900
+    text-transform: uppercase
+
+    @media (min-width: 640px)
+      font-size: 55px
+
+    transition: all 0.5s ease
+
+    span
+      color: $secondary
+
+  p
+    margin-top: 20px
+    color: $primary_text
+    position: relative
+    font-size: 14px
+    opacity: 0.8
+
+    @apply font-secondary
+
+    transition: all 0.5s ease
+
+    @media (min-width: 640px)
+      font-size: 16px
+
+      &::after
+        content: ''
+        display: block
+        position: absolute
+        width: 30px
+        height: 2px
+        background-color: $secondary
+        right: -50px
+        bottom: 50%
+
+      &::before
+        content: ''
+        display: block
+        position: absolute
+        width: 30px
+        height: 2px
+        background-color: $secondary
+        left: -50px
+        bottom: 50%
+
+=container
+  width: 100%
+  max-width: 1280px
+  padding-right: 1rem
+  padding-left: 1rem
+
+  @media (min-width: 640px)
+    width: 90%
+    padding-right: 2rem
+    padding-left: 2rem
+
+  @media (min-width: 1024px)
+    padding-top: 1rem
+
+=arrow
+  width: 50px
+  height: 4px
+  display: block
+  background-color: $primary_text
+  position: absolute
+  transition: transform .2s ease-in-out

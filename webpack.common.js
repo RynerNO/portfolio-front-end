@@ -33,26 +33,27 @@ module.exports = {
         ]
       },
       {
-        test: /\.s[ac]ss$/i,
-        exclude: /\.global.scss$/,
+        test: /\.sass$/i,
         use: [
           'vue-style-loader',
-          { loader: 'css-loader', options: { importLoaders: 1, modules: true} },
+          { loader: 'css-loader', options: { importLoaders: 1} },
           'postcss-loader',
           {loader: 'sass-loader',
           options: {
-            implementation: require('sass')
+            implementation: require('sass'),
+            sassOptions: {
+              indentedSyntax: true
+            }
             }
           },
           {
             loader: 'sass-resources-loader',
             options: {
-              resources: ['./client/styles/utils/colors.scss', './client/styles/utils/mixins.scss']
+              resources: ['./src/client/styles/utils/colors.sass', './src/client/styles/utils/mixins.sass']
             },
           },
         ]
       },
-
       {
         test: /\.global.scss$/,
         use: [
@@ -67,7 +68,7 @@ module.exports = {
           {
             loader: 'sass-resources-loader',
             options: {
-              resources: ['./client/styles/utils/colors.scss', './client/styles/utils/mixins.scss']
+              resources: ['./src/client/styles/utils/colors.scss', './src/client/styles/utils/mixins.scss']
             },
           },
         ]
@@ -80,7 +81,11 @@ module.exports = {
           { loader: 'css-loader', options: { importLoaders: 1} },
           'postcss-loader',
         ]
-      }
+      },
+      {
+        test: /\.svg$/,
+        use: ['file-loader']
+      },
     ]
   },
   plugins: [new VueLoaderPlugin()]

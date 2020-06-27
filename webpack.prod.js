@@ -3,7 +3,7 @@ const dev = require('./webpack.common.js');
 const path = require('path');
 module.exports = merge(dev, {
   mode: 'production',
-  entry: ['./client/app.js'],
+  entry: ['./src/client/app.js'],
   output: {
     filename: 'app.js',
     publicPath: '/',

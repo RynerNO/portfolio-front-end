@@ -11,19 +11,20 @@
         ["module-resolver", {
             "root": ["./"], 
             "alias": {
-                "@mixins": "./client/mixins",
-                "@styles": "./client/styles",
-                "@models": "./server/models",
-                "@utils": "./client/utils",
-                "@store": "./client/store",
-                "@directives": "./client/directives",
-                "@components": "./client/components",
-                "@pages": "./client/pages",
-                "@config": "./server/config",
-                "@routes": "./server/routes",
-                "@controllers": "./server/controllers",
-                "@validators" : "./server/validators",
-                "@middleware" : "./server/middleware"
+                "@mixins": "./src/client/mixins",
+                "@styles": "./src/client/styles",
+                "@assets": "./src/client/assets",
+                "@models": "./src/server/models",
+                "@utils": "./src/client/utils",
+                "@store": "./src/client/store",
+                "@directives": "./src/client/directives",
+                "@components": "./src/client/components",
+                "@pages": "./src/client/pages",
+                "@config": "./src/server/config",
+                "@routes": "./src/server/routes",
+                "@controllers": "./src/server/controllers",
+                "@validators" : "./src/server/validators",
+                "@middleware" : "./src/server/middleware"
             }}
         ],
         ["@babel/plugin-transform-runtime",
