@@ -1,40 +1,43 @@
 <template lang="pug">
   section(class="flex items-center justify-center home")
     div(class="z-20 text")
-      h3(class="uppercase font-secondary") Hi there!
+      h3(class="uppercase font-secondary") {{ $ml.get('home').greeting }}
       h1(class="uppercase font-primary flex") 
-        span i'm
+        span {{ $ml.get('home').me }}
         div 
           span(class="dynamicTitle overflow-hidden")
             |{{ dynamicTitle }}
-      p(class='font-secondary')
-        |I'm a beginner Front-End Developer based in ***REMOVED***, Ukraine. 
-        |Professionally connected with the web development industry and information
-        |technology for 1 year. 
+      p(class='font-secondary') {{ $ml.get('home').aboutMe}}
       div(class="flex my-5 buttons")
         button(@click="$refs.animateProgress.animateLoadBar('about')" class="mx-2 btn about")
           span
             font-awesome(icon="user" class="mx-2")
-            |More About Me
+            |{{ $ml.get('home').buttons.aboutMe }}
         button(@click="$refs.animateProgress.animateLoadBar('portfolio')" class="mx-2 btn portfolio") 
           span
             font-awesome(icon="briefcase" class="mx-2")
-            |My Projects
-      
+            |{{ $ml.get('home').buttons.projects}}
+        
     animatedBackground
     changePage(ref="animateProgress")
+    
+
+
 </template>
 
 <script>
 
 import anime from 'animejs/lib/anime.es.js';
+
 import animatedBackground from '@components/AnimatedBackground.vue';
 import changePage from '@components/ChangePage.vue';
+
+import { MLBuilder } from 'vue-multilanguage'
+
 export default {
   data() {
     return {
       dynamicTitle: '',
-      titles: ['\u00a0Andrey', '\u00a0a beginner developer'],
       interval: null,
       animate: true,
     };
@@ -43,9 +46,13 @@ export default {
     animatedBackground,
     changePage
   },
+  created() {
+    this.$ml.change('ru')
+  },
   mounted() {
-    this.dynamicTitle = this.titles[0]
+    this.dynamicTitle = this.$ml.get('home').titles[0]
     this.animateDynamicTitle(anime.timeline())
+    
   },
   beforeDestroy() {
     this.animate = false
@@ -59,8 +66,8 @@ export default {
               easing: 'easeOutQuad',
               duration: 1500,
               complete: () => {
-                  let i = this.titles.indexOf(this.dynamicTitle)
-                  this.dynamicTitle = (i>=(this.titles.length-1)) ? this.titles[0] : this.titles[i+1]
+                  let i = this.$ml.get('home').titles.indexOf(this.dynamicTitle)
+                  this.dynamicTitle = (i>=(this.$ml.get('home').titles.length-1)) ? this.$ml.get('home').titles[0] : this.$ml.get('home').titles[i+1]
               }
           })
         tl.add({ 

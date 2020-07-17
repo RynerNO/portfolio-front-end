@@ -3,11 +3,11 @@
 		div(class="mx-auto" class="container")
 			div(class="grid grid-cols-3" :class="{slideOut: infoSlideActive}")
 				div(class="col-span-3" class="titleContainer")
-					h2(class="title" ) My&nbsp;
-						span portfolio
+					h2(class="title" ) {{ $ml.get('portfolio').title[0] }}&nbsp;
+						span {{ $ml.get('portfolio').title[1] }}
 					p A few coding projects.&nbsp;&nbsp;Please note these are not my designs,&nbsp;&nbsp;just the code.
 				div(class="projects grid").col-span-3
-					project.col-span-1(v-for="(project, index) of projects" :key="index" v-bind="project" @click="showSlide($event, project)")
+					project.col-span-1(v-for="(project, index) of projects" :key="index" v-bind="project" @click="showSlide($event, project)" :btnText="$ml.get('portfolio').buttons.viewMore")
 			
 			div(class="projectInfo" :class="{projectInfoActive: infoSlideActive}")
 				div(class="projectInfoContainer" class="grid grid-cols-3")
@@ -20,21 +20,21 @@
 						button(class="closeButton" @click="closeSlide")
 							span
 								font-awesome(icon="times")
-								|&nbsp;close
+								|&nbsp;{{ $ml.get('portfolio').buttons.close }}
 					div(class="projectInfoText" class="col-span-3")
 						ul
 							li 
 								font-awesome(icon='file-alt')
 								span
-									|Project:&nbsp;{{ slideProps.type }}
+									|{{ $ml.get('portfolio').slide.project }}:&nbsp;{{ slideProps.type }}
 							li 
 								font-awesome(icon='hourglass')
 								span
-									|Duration:&nbsp;{{ slideProps.duration }}
+									|{{ $ml.get('portfolio').slide.duration }}:&nbsp;{{ slideProps.duration }}
 							li 
 								font-awesome(icon="file-code")
 								span
-									|Technologies:&nbsp;{{ slideProps.tech	}}
+									|{{ $ml.get('portfolio').slide.tech }}&nbsp;{{ slideProps.tech	}}
 							li
 								font-awesome(:icon=['fab', 'github'])
 								span
@@ -43,7 +43,7 @@
 						a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`${slideProps.link}`")
 							span
 								font-awesome(icon="external-link-alt") 
-								| Prewiew
+								| {{ $ml.get('portfolio').buttons.preview }}
 			div(class="projectInfoOverlay" :class="{projectInfoOverlayActive: infoSlideActive}" @click="closeSlide")
 		changePage
 </template>

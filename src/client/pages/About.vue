@@ -3,26 +3,22 @@
 		div(class="mx-auto" class="container")
 			div(class="grid grid-cols-3 " class="about")
 				div(class="col-span-3"  class="titleContainer")
-					h2(class="aboutTitle") about
-						span  me
+					h2(class="aboutTitle") {{ $ml.get('about').title[0] }}
+						span  {{ $ml.get('about').title[1] }}
 					p I love to code.
 				div(class='flex flex-wrap col-span-3 personalInfoContainer')
 					div(class="aboutmeText")
-						p I'm a beginner developer based in ***REMOVED***, Ukraine. 
-							|Professionally connected with the web development industry and information
-							|technology for 1 year. 
-							|Aiming to leverage my abilities to successfully fit the developer 
-							|role in your company. Well-organised person, problem solver with high attention to detail.
+						p {{ $ml.get('about').aboutMe}}
 							
 					
 		
 				div(class="buttonContainer")
 					a(class="button" href="/portfolio/resume.pdf" download) 
-						span Download CV
+						span {{ $ml.get('about').buttons.resume}}
 				
 				div(class="col-span-3")
 					hr(class="aboutHr")
-				h2(class="uppercase" class="skillsTitle") Skills
+				h2(class="uppercase" class="skillsTitle") {{ $ml.get('about').skillsTitle }}
 				div(class="skills" class="col-span-3 flex flex-wrap")
 					div(class="skill" v-for="skill of skills" :key="skill.name")
 						p {{ skill.name }}
@@ -30,9 +26,9 @@
 							div(class="skillKnowledge" :style="{width: skill.percents+'%'}")
 							div(class="skillPercents" class="font-secondary") {{ skill.percents }}%
 								div
-				h2(class="uppercase" class="skillsTitle") Languages
+				h2(class="uppercase" class="skillsTitle") {{ $ml.get('about').languagesTitle }}
 				div(class="skills" class="col-span-3 flex flex-wrap")
-					div(class="skill" v-for="lang of languages" :key="lang.name")
+					div(class="skill" v-for="lang of $ml.get('about').languages" :key="lang.name")
 						p {{ lang.name }}
 						div(class="skillBar")
 							div(class="skillKnowledge" :style="{width: lang.percents+'%'}")
@@ -91,16 +87,7 @@ export default {
 				}
 		
 				],
-				languages: [	{
-					name: 'English',
-					percents: 45,
-				}, 
-				{
-					name: 'Russian',
-					percents: 90
-				},
-			
-				],
+				
 					skills: [{
 						name: "HTML / CSS",
 						percents: 80,

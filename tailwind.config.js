@@ -4,7 +4,7 @@ module.exports = {
       padding: '2rem',
     },
     fontFamily: {
-      primary: ['Poppins'],
+      primary: ['Poppins', 'IBM Plex Sans'],
       secondary: ['Open Sans']
     },
     fontSize: {

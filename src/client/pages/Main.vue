@@ -1,5 +1,6 @@
 <template lang="pug">
   main(class="font-primary main h-full")
+    button(v-for="lang in $ml.list" :key="lang" @click="$ml.change(lang); $forceUpdate()" v-text="lang")
     transition(   v-bind:css="false"   
                   v-on:enter="enter"
                   v-on:leave="leave"

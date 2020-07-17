@@ -6757,6 +6757,11 @@ vue-loader@^15.9.0:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
+vue-multilanguage@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/vue-multilanguage/-/vue-multilanguage-4.0.10.tgz#698136be154a0591c76e1d4f8c64033c8aabe617"
+  integrity sha512-PNx9TxG5/AVKaUHbX7kN7DBHYgnG6NLj8CfVv23CXlAGC710ll21aLvfqEaY6eVUeh9EFs5jbkgtvzE6kksO/A==
+
 vue-recaptcha@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/vue-recaptcha/-/vue-recaptcha-1.3.0.tgz#e668e54f798c6333057ef38b4425a72f451ce478"
