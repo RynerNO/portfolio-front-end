@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import axios from 'axios';
-
+import config from '@config'
 const messageSchema = Yup.object().shape({
   name: Yup.string().required(),
   email: Yup.string().required(),
@@ -11,7 +11,7 @@ const messageSchema = Yup.object().shape({
 export default (req, res, next) => {
   messageSchema.validate(req.body)
     .then(() => {
-      const secret_key = process.env.recaptchaSecret;
+      const secret_key = congig.recaptchaSecret;
       const token = req.body.token;
       const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret_key}&response=${token}`;
   

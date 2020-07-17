@@ -55,21 +55,15 @@ module.exports = {
         ]
       },
       {
-        test: /\.global.scss$/,
+        test: /\.scss$/,
         use: [
           'vue-style-loader',
           { loader: 'css-loader', options: { importLoaders: 1} },
           'postcss-loader',
           {loader: 'sass-loader',
           options: {
-            implementation: require('sass')
+            implementation: require('sass'),
             }
-          },
-          {
-            loader: 'sass-resources-loader',
-            options: {
-              resources: ['./src/client/styles/utils/colors.scss', './src/client/styles/utils/mixins.scss']
-            },
           },
         ]
       },

@@ -21,7 +21,7 @@
 
 </template>
 <script>
-import PortfolioProjects from '@components/AdminPanel/PortfolioProjects.vue';
+import PortfolioProjects from '@pages/AdminPanel/PortfolioProjects.vue';
 import { mapState } from 'vuex';
 import BurgerIcon from '@assets/burger.svg'
 import NotificationIcon from '@assets/notification.svg'

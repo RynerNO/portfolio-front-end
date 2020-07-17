@@ -2,7 +2,7 @@ import Vue from 'vue';
 
 import Main from './pages/Main.vue';
 
-import './styles/main.global.scss';
+import './styles/tailwind.scss';
 
 import router from './router';
 

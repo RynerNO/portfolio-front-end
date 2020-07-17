@@ -5,6 +5,16 @@ const ProjectSchema = new mongoose.Schema({
   description: String,
   tech: String,
   type: String,
+  index: {
+    type: String,
+    default: ''
+  },
+  link: {
+    type: String,
+    default: ''
+  },
+  gitLink: String,
+  projectFolder: String,
   duration: String,
   createdAt: String,
   updatedAt: String,

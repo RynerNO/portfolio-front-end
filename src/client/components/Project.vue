@@ -1,25 +1,22 @@
 <template lang="pug">
-        div( class="project" @click="$emit('click', props )")
+        div(class="project")
           div(class="project__bar")
-            h2 {{ name }}
+            h2 {{ title }}
             i
           div(class="project__content")
-            img(:src="`${linkComputed}/poster.webp`")
             picture
-              source(:srcset="`${linkComputed}.webp`" type="image/webp")
-              img(:src="`${linkComputed}.png`" alt="insert alt text here")
-            
-
+              source(:srcset="`${filesLink}/poster.webp`" type="image/webp")
+              img(:src="`${filesLink}/poster.png`" alt="Project preview image")
             div(class="project__hover")
               div(class="project__bg")
-              span(class="project__view-more-btn" )
+              button(class="project__btn" @click="$emit('click', previewLink)")
                 span {{ btnText }}
 </template>
 <script>
 
 export default {
   props: {
-    name: {
+    title: {
       type: String,
       required: true
       },
@@ -35,9 +32,17 @@ export default {
       type: String,
       required: true
     },
+    projectFolder: {
+      type: String,
+      required: true
+    },
+    index: {
+      type: String,
+      required: true
+    },
     link: {
       type: String,
-      
+      required: true
     },
     btnText: {
       type: String,
@@ -50,11 +55,18 @@ export default {
     }
   },
   computed: {
-    linkComputed() {
-      return this.link || `public/${name.title}`
+    filesLink() {
+      return `site_previews/${this.projectFolder}`
+    },
+    previewLink() {
+      if(this.link.length > 0) {
+        return `${this.link}/${this.index}`
+      } else {
+        return `site_previews/${this.projectFolder}/${this.index}`
+      }
     }
-  },
 
+  },
 }
 </script>
 <style lang="sass" scoped>
@@ -67,7 +79,8 @@ export default {
   transition: all 0.5s
   img
     width: 100%
-    height: auto
+    height: 100%
+    object-fit: cover
 
   &__bar
     background-color: #ddd
@@ -124,19 +137,12 @@ export default {
   &__content
     overflow: hidden
     position: relative
-    max-width: 603px
-    max-height: 339px
+    height: 280px
     z-index: 10
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.15)
     border-radius: 0px 0px 8px 8px
+    display: flex
 
-    @media (min-width: 640px)
-      max-width: 415px
-      max-height: 233px
-
-    @media (min-width: 1280px)
-      max-width: 350px
-      max-height: 197px
 
   &:hover &__hover
       opacity: 1
@@ -163,7 +169,7 @@ export default {
       background-color: rgba(10, 10, 10, 0.7)
       background-blend-mode: luminosity
 
-  &__view-more-btn
+  &__btn
       font-weight: 500
       font-size: 15px
 

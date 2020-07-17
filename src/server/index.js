@@ -6,13 +6,22 @@ import config from '@config';
 
 import v1Router from '@routes';
 
+import Webpack from 'webpack';
+
+import WebpackConfig from '../../webpack.dev';
+
+import WebpackDevMiddleware from 'webpack-dev-middleware';
+import dotenv from 'dotenv';
+
+import WebpackHotMiddleware from 'webpack-hot-middleware';
+
 import path from 'path';
 
 import BodyParser from 'body-parser';
 
 import compression from 'compression';
 
-import cors from 'cors';
+dotenv.config();
 Mongoose.connect(config.databaseUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -20,23 +29,29 @@ Mongoose.connect(config.databaseUrl, {
 const app = Express();
 
 app.use(BodyParser.json());
-app.use(BodyParser.urlencoded({
-  extended: false
-}));
-app.use(cors())
-app.use(compression());
 
+app.use(compression());
+if (process.env.NODE_ENV !== 'production') {
+  const compiler = Webpack(WebpackConfig);
+  app.use(
+        WebpackDevMiddleware(compiler, {
+          hot: true,
+          publicPath: WebpackConfig.output.publicPath
+        })
+      );
+        app.use(WebpackHotMiddleware(compiler));
+}
 app.use(v1Router);
 
-app.use(Express.static(path.resolve(__dirname, 'public')));
+app.use(Express.static(path.resolve('dist', 'public')));
 
 app.get('*', (req, res) => {
 
-    res.sendFile(path.resolve(__dirname, 'public/index.html'));
+  res.sendFile(path.resolve('dist', 'public/index.html'));
   
   
   
 });
 app.listen(3000, () => {
-  console.log('run');
+  console.log('SERVER RUNNING ON PORT: 3000');
 });

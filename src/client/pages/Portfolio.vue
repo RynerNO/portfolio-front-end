@@ -6,21 +6,23 @@
 					h2(class="title" ) My&nbsp;
 						span portfolio
 					p A few coding projects.&nbsp;&nbsp;Please note these are not my designs,&nbsp;&nbsp;just the code.
-				div(class="projects grid")
-					project(@click="showSlide" v-for="(project, index) of projects" :key="index" v-bind="project")
+				div(class="projects grid").col-span-3
+					project.col-span-1(v-for="(project, index) of projects" :key="index" v-bind="project" @click="showSlide($event, project)")
 			
 			div(class="projectInfo" :class="{projectInfoActive: infoSlideActive}")
 				div(class="projectInfoContainer" class="grid grid-cols-3")
 					div(class="col-span-3" class="projectInfoImage")
-						img( :src="`/site_preview/${slideProps.image}`" )
+						picture
+							source(:srcset="`site_previews/${slideProps.projectFolder}/poster.webp`" type="image/webp")
+							img(:src="`site_previews/${slideProps.projectFolder}/poster.png`" alt="Project preview image")
 					div(class="col-span-3 flex justify-between items-center")
-						h3(class="projectInfoTitle") {{ slideProps.name }}
+						h3(class="projectInfoTitle") {{ slideProps.title }}
 						button(class="closeButton" @click="closeSlide")
 							span
 								font-awesome(icon="times")
 								|&nbsp;close
 					div(class="projectInfoText" class="col-span-3")
-						ul(class="")
+						ul
 							li 
 								font-awesome(icon='file-alt')
 								span
@@ -32,9 +34,13 @@
 							li 
 								font-awesome(icon="file-code")
 								span
-									|Technologies:&nbsp;{{ slideProps.tech}}
-									
-						a(class="previewButton" :href="`/site_preview/${slideProps.name.toLowerCase().replace(' ', '_')}/index.html`")
+									|Technologies:&nbsp;{{ slideProps.tech	}}
+							li
+								font-awesome(:icon=['fab', 'github'])
+								span
+									|Github:&nbsp;
+									a(:href="slideProps.gitLink" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-500") {{ slideProps.title}}
+						a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`${slideProps.link}`")
 							span
 								font-awesome(icon="external-link-alt") 
 								| Prewiew
@@ -58,23 +64,14 @@ export default {
 				 projects: [],
 				infoSlideActive: false,
 				slideProps: {
-					name: '',
-					tech: '',
-					image: '',
-					type: '',
-					duration: ''
 				}
 			}
         },
 		methods: {
-			 showSlide({name, tech, imageName, type, duration}) {
-				 tech = tech.split(',').join(', ');
+			 showSlide(previewLink, project) {
 				this.slideProps = {
-					name: name, 
-					tech: tech, 
-					image: imageName, 
-					type: type, 
-					duration: duration,
+					...project,
+          link: previewLink
 				}
 				this.infoSlideActive = true;
 			},
@@ -110,15 +107,13 @@ body::-webkit-scrollbar
 
 
 .projects
-  grid-template-columns: repeat(1, minmax(0, max-content))
+  grid-template-columns: repeat(1, minmax(0, 1fr))
+  grid-gap: 1rem
+  @media (min-width: 700px)
+    grid-template-columns: repeat(2, minmax(0, 1fr))
 
-  @media (min-width: 640px)
-    grid-template-columns: repeat(4, minmax(0, max-content))
-
-  @media (min-width: 1280px)
-    grid-template-columns: repeat(3, minmax(0, max-content))
-
-
+  @media (min-width: 1400px)
+    grid-template-columns: repeat(3, minmax(0, 1fr))
 
 
 // infoSlide
@@ -142,11 +137,11 @@ body::-webkit-scrollbar
     overflow: hidden
     max-height: 400px
     border-radius: 6px
-
+    display: flex
     img
       width: 100%
-      height: auto
-      display: block
+      height: 100%
+      object-fit: scale-down
 
   .projectInfoContainer
     position: relative
