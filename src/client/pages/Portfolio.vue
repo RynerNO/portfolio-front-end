@@ -5,46 +5,46 @@
 				div(class="col-span-3" class="titleContainer")
 					h2(class="title" ) {{ $ml.get('portfolio').title[0] }}&nbsp;
 						span {{ $ml.get('portfolio').title[1] }}
-					p A few coding projects.&nbsp;&nbsp;Please note these are not my designs,&nbsp;&nbsp;just the code.
+					p(lang="en") A few coding projects.&nbsp;&nbsp;Please note these are not my designs,&nbsp;&nbsp;just the code.
 				div(class="projects grid").col-span-3
 					project.col-span-1(v-for="(project, index) of projects" :key="index" v-bind="project" @click="showSlide($event, project)" :btnText="$ml.get('portfolio').buttons.viewMore")
 			
-			div(class="projectInfo" :class="{projectInfoActive: infoSlideActive}")
-				div(class="projectInfoContainer" class="grid grid-cols-3")
-					div(class="col-span-3" class="projectInfoImage")
-						picture
-							source(:srcset="`site_previews/${slideProps.projectFolder}/poster.webp`" type="image/webp")
-							img(:src="`site_previews/${slideProps.projectFolder}/poster.png`" alt="Project preview image")
-					div(class="col-span-3 flex justify-between items-center")
-						h3(class="projectInfoTitle") {{ slideProps.title }}
-						button(class="closeButton" @click="closeSlide")
+		div(class="projectInfo" :class="{projectInfoActive: infoSlideActive}")
+			div(class="projectInfoContainer" class="grid grid-cols-3")
+				div(class="col-span-3" class="projectInfoImage")
+					picture
+						source(:srcset="`site_previews/${slideProps.projectFolder}/poster.webp`" type="image/webp")
+						img(:src="`site_previews/${slideProps.projectFolder}/poster.png`" alt="Project preview image")
+				div(class="col-span-3 flex justify-between items-center")
+					h3(class="projectInfoTitle") {{ slideProps.title }}
+					button(class="closeButton" @click="closeSlide")
+						span
+							font-awesome(icon="times")
+							|&nbsp;{{ $ml.get('portfolio').buttons.close }}
+				div(class="projectInfoText" class="col-span-3")
+					ul
+						li 
+							font-awesome(icon='file-alt')
 							span
-								font-awesome(icon="times")
-								|&nbsp;{{ $ml.get('portfolio').buttons.close }}
-					div(class="projectInfoText" class="col-span-3")
-						ul
-							li 
-								font-awesome(icon='file-alt')
-								span
-									|{{ $ml.get('portfolio').slide.project }}:&nbsp;{{ slideProps.type }}
-							li 
-								font-awesome(icon='hourglass')
-								span
-									|{{ $ml.get('portfolio').slide.duration }}:&nbsp;{{ slideProps.duration }}
-							li 
-								font-awesome(icon="file-code")
-								span
-									|{{ $ml.get('portfolio').slide.tech }}&nbsp;{{ slideProps.tech	}}
-							li
-								font-awesome(:icon=['fab', 'github'])
-								span
-									|Github:&nbsp;
-									a(:href="slideProps.gitLink" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-500") {{ slideProps.title}}
-						a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`${slideProps.link}`")
+								|{{ $ml.get('portfolio').slide.project }}:&nbsp;{{ slideProps.type }}
+						li 
+							font-awesome(icon='hourglass')
 							span
-								font-awesome(icon="external-link-alt") 
-								| {{ $ml.get('portfolio').buttons.preview }}
-			div(class="projectInfoOverlay" :class="{projectInfoOverlayActive: infoSlideActive}" @click="closeSlide")
+								|{{ $ml.get('portfolio').slide.duration }}:&nbsp;{{ slideProps.duration }}
+						li 
+							font-awesome(icon="file-code")
+							span
+								|{{ $ml.get('portfolio').slide.tech }}&nbsp;{{ slideProps.tech	}}
+						li
+							font-awesome(:icon=['fab', 'github'])
+							span
+								|Github:&nbsp;
+								a(:href="slideProps.gitLink" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-500") {{ slideProps.title}}
+					a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`${slideProps.link}`")
+						span
+							font-awesome(icon="external-link-alt") 
+							| {{ $ml.get('portfolio').buttons.preview }}
+		div(class="projectInfoOverlay" :class="{projectInfoOverlayActive: infoSlideActive}" @click="closeSlide")
 		changePage
 </template>
 
@@ -54,31 +54,35 @@
 	import changePage from '@components/ChangePage.vue';
 	import Project from '@components/Project.vue';
 export default {
-
-		components: {
-			changePage,
-			Project
-		},
-		data() {
-			return {
-				 projects: [],
-				infoSlideActive: false,
-				slideProps: {
-				}
-			}
-        },
-		methods: {
-			 showSlide(previewLink, project) {
-				this.slideProps = {
-					...project,
-          link: previewLink
-				}
-				this.infoSlideActive = true;
-			},
-			closeSlide() {
-				this.infoSlideActive = false;
-			}
-		},
+  components: {
+    changePage,
+    Project
+  },
+  meta() {
+    return {
+      title: this.$ml.get('portfolio').meta.title,
+    }
+  },
+  data() {
+    return {
+        projects: [],
+      infoSlideActive: false,
+      slideProps: {
+      }
+    }
+      },
+  methods: {
+      showSlide(previewLink, project) {
+      this.slideProps = {
+        ...project,
+        link: previewLink
+      }
+      this.infoSlideActive = true;
+    },
+    closeSlide() {
+      this.infoSlideActive = false;
+    }
+  },
   created() {
 		this.$store.dispatch(GET_PROJECTS).then(()=> {
 		this.projects = this.$store.state.projects.projects

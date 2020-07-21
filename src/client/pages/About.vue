@@ -5,7 +5,7 @@
 				div(class="col-span-3"  class="titleContainer")
 					h2(class="aboutTitle") {{ $ml.get('about').title[0] }}
 						span  {{ $ml.get('about').title[1] }}
-					p I love to code.
+					p(lang="en") I love to code.
 				div(class='flex flex-wrap col-span-3 personalInfoContainer')
 					div(class="aboutmeText")
 						p {{ $ml.get('about').aboutMe}}
@@ -13,7 +13,7 @@
 					
 		
 				div(class="buttonContainer")
-					a(class="button" href="/portfolio/resume.pdf" download) 
+					a(class="button" target="_blank" rel="noopener noreferrer" href="***REMOVED***") 
 						span {{ $ml.get('about').buttons.resume}}
 				
 				div(class="col-span-3")
@@ -44,77 +44,82 @@ export default {
   components: {
     changePage
   },
-		data() {
-			return {
-				personalInfo:[
-				{
-					name: 'First Name',
-					value: 'Andrey',
-				},
-				{
-					name: 'Last Name',
-					value: '***REMOVED***',
-				},
-				{
-					name: 'Birthdate',
-					value: '21.10.1998',
-				},
-				{
-					name: 'Nationality',
-					value: 'Ukrainian',
-				},
-				{
-					name: 'Experience',
-					value: '1 year',
-				},
-				{
-					name: 'Address',
-					value: '***REMOVED***',
-				},
-		
-				{
-					name: 'Email',
-					value: '***REMOVED***',
-				},
-				{
-					name: 'Skype',
-					value: 'live:ryner.no',
-				},
-		
-				{
-					name: 'Github',
-					value: 'RynerNO',
-				}
-		
-				],
-				
-					skills: [{
-						name: "HTML / CSS",
-						percents: 80,
-					},
-					{
-						name: "Pug / SCSS",
-						percents: 65
-					},
-					{
-						name: "JavaScript",
-						percents: 60
-					},
-					{
-						name: "Git",
-						percents: 50
-					},
-					{
-						name: "Vue.js",
-						percents: 40
-					},
-					{
-						name: "Node.js",
-						percents: 35
-					},
-				]
-			}
-		},
+  meta() {
+    return {
+      title: this.$ml.get('about').meta.title,
+    }
+  },
+	data() {
+    return {
+      personalInfo:[
+      {
+        name: 'First Name',
+        value: 'Andrey',
+      },
+      {
+        name: 'Last Name',
+        value: '***REMOVED***',
+      },
+      {
+        name: 'Birthdate',
+        value: '21.10.1998',
+      },
+      {
+        name: 'Nationality',
+        value: 'Ukrainian',
+      },
+      {
+        name: 'Experience',
+        value: '1 year',
+      },
+      {
+        name: 'Address',
+        value: '***REMOVED***',
+      },
+  
+      {
+        name: 'Email',
+        value: '***REMOVED***',
+      },
+      {
+        name: 'Skype',
+        value: 'live:ryner.no',
+      },
+  
+      {
+        name: 'Github',
+        value: 'RynerNO',
+      }
+  
+      ],
+      
+        skills: [{
+          name: "HTML / CSS",
+          percents: 80,
+        },
+        {
+          name: "Pug / SCSS",
+          percents: 65
+        },
+        {
+          name: "JavaScript",
+          percents: 60
+        },
+        {
+          name: "Git",
+          percents: 50
+        },
+        {
+          name: "Vue.js",
+          percents: 40
+        },
+        {
+          name: "Node.js",
+          percents: 35
+        },
+      ]
+    }
+  },
 
 	}
 </script>

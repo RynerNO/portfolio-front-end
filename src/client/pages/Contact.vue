@@ -3,9 +3,9 @@
     div(class="mx-auto" class="container")
       div(class="grid grid-cols-3")
         div(class="col-span-3" class="title")
-          h2 get&nbsp;
-            span in touch
-          p I’m always open to discussing work.
+          h2 {{ $ml.get('contact').title[0] }} &nbsp;
+            span {{ $ml.get('contact').title[1] }}
+          p(lang="en") I’m always open to discussing work.
         div(class="flex" class="contactsContainer")
           div(class="my-2")
             p 
@@ -24,8 +24,7 @@
             h6 
               a(href="https://github.com/RynerNO") RynerNO
         div(class="formContainer")
-          p If you have any project or job offer, please fill out the form below and I will 
-            | reply you shortly. 
+          p {{ $ml.get('contact').description }} 
           div
             ValidationObserver(v-slot="{ invalid, reset}" ref="observer")
               form 
@@ -33,17 +32,17 @@
                   div(class="inputContainer")
                     ValidationProvider(name="Name" rules="required" v-slot="{errors}")
                       font-awesome(icon='user')
-                      input(placeholder="Your name" type="text" v-model="message.name")
+                      input(:placeholder="$ml.get('contact').placeholders.name" type="text" v-model="message.name")
                       span(class='px-2 text-red-600 text-lg w-full') {{ errors[0] }}
                   div(class="inputContainer")
                     ValidationProvider(name="Email" rules="required|email" v-slot="{errors}")
                       font-awesome(icon='envelope')
-                      input(placeholder="Your email" type="email" v-model="message.email")
+                      input(:placeholder="$ml.get('contact').placeholders.email" type="email" v-model="message.email")
                       span(class='px-2 text-red-600 text-lg w-full') {{ errors[0] }}
                 div(class="inputContainer" class="w-full")
                   ValidationProvider(name="Message" rules="required" v-slot="{errors}")
                     font-awesome(icon='comments')
-                    textarea(placeholder="Your message" v-model="message.text")
+                    textarea(:placeholder="$ml.get('contact').placeholders.message" v-model="message.text")
                     span(class='px-2 text-red-600 text-lg w-full') {{ errors[0] }}
                 div(class="w-full")
                   span(v-if="messageSendSuccess" class="px-12 text-green-600") Message Sent
@@ -52,7 +51,7 @@
                 button(class="button" :disabled="(invalid||failCaptcha)" @click.prevent="sendMessage") 
                   span 
                     font-awesome(icon='paper-plane')
-                    |send message
+                    |{{ $ml.get('contact').buttons.sendMessage }}
     changePage
 </template>
 
@@ -86,6 +85,11 @@ export default {
     VueRecaptcha,
      ValidationProvider,
   ValidationObserver,
+  },
+  meta() {
+    return {
+      title: this.$ml.get('contact').meta.title,
+    }
   },
   data() {
     return {

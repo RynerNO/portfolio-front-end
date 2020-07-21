@@ -8,20 +8,20 @@ div(class='changePage pointer-events-none' )
 			li(:class="currentPage  === 'home' ? 'active' : ''" @click.once="animateLoadBar('home')")
 				a
 					font-awesome(icon="home")
-					span Home
+					span {{ $ml.get('home').meta.title }}
 					
 			li(:class="currentPage  === 'about' ? 'active' : ''" @click.once="animateLoadBar('about')")
 				a
 					font-awesome(icon="user" )
-					span About
+					span {{ $ml.get('about').meta.title }}
 				li(:class="currentPage  === 'portfolio' ? 'active' : ''" @click.once="animateLoadBar('portfolio')") 	
 					a
 						font-awesome(icon="briefcase")
-						span Portfolio
+						span {{ $ml.get('portfolio').meta.title }}
 				li(:class='currentPage  === "contact" ? "active" : ""' @click.once="animateLoadBar('contact')") 	
 					a
 						font-awesome(icon="comments")
-						span Contacts
+						span {{ $ml.get('contact').meta.title }}
 		span( class="navBg" :class='navOpen ? "navBgShow" : ""' )
 	nav(class="flex flex-col pointer-events-auto topNav" )
 		button(@click="navOpen = !navOpen" class="navButton" :class="{navButtonActive: navOpen}")
@@ -29,10 +29,10 @@ div(class='changePage pointer-events-none' )
 		span(class="navBg" :class="{ navBgShow: navOpen }")
 	div(class="arrowContainer previousPage" :class="{nextPageAnimate:animate }" @click.once='previousPage' v-if='pagePrevious')
 		span
-			span {{ pagePrevious }}
+			span {{ $ml.get(pagePrevious).meta.title }}
 	div(class="arrowContainer nextPage" :class="{ nextPageAnimate: animate }" @click.once='nextPage' v-if='pageNext')
 		span
-			span {{ pageNext }}
+			span {{ $ml.get(pageNext).meta.title }}
 
 
 </template>
@@ -224,7 +224,7 @@ div(class='changePage pointer-events-none' )
             width: 50px
             opacity: 1
             display: none
-
+            white-space: nowrap
             @media (min-width: 1024px)
               display: initial
 
@@ -318,7 +318,7 @@ div(class='changePage pointer-events-none' )
 
       top: 20%
       right: 55%
-      width: 8.3rem
+      width: 8.8rem
       height: 3rem
       overflow: hidden
 

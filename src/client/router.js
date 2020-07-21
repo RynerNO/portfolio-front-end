@@ -1,23 +1,15 @@
 import Router from 'vue-router';
 
-import Home from '@pages/Home.vue';
-
-import About from '@pages/About.vue';
-
-import Portfolio from '@pages/Portfolio.vue';
-
-import Contact from '@pages/Contact.vue';
-
 export default new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
-      component: Home
+      component: () => import('@pages/Home.vue')
     },
     {
       path: '/about',
-      component: About
+      component: () => import('@pages/About.vue')
     },
     {
       path: '/home',
@@ -25,11 +17,11 @@ export default new Router({
     },
     {
       path: '/portfolio',
-      component: Portfolio
+      component: () => import('@pages/Portfolio.vue')
     },
     {
       path: '/contact',
-      component: Contact
+      component: () => import('@pages/Contact.vue')
     },
     { 
       path: '/admin',

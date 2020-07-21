@@ -14,6 +14,7 @@
                 "@mixins": "./src/client/mixins",
                 "@styles": "./src/client/styles",
                 "@assets": "./src/client/assets",
+                "@locales": "./src/client/locales",
                 "@models": "./src/server/models",
                 "@utils": "./src/client/utils",
                 "@store": "./src/client/store",
