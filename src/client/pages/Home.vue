@@ -1,7 +1,7 @@
 <template lang="pug">
   section(class="flex items-center justify-center home")
     div(class="absolute right-0 top-0 mr-8 mt-8 z-50 pointer-events-auto flex align-items-center")
-      button(class="flex m-1 p-2 text-xs md:text-md md:p-3 text-white rounded-md text-center outline-none capitalize focus:outline-none select-none" v-for="lang in $ml.list" :key="lang" @click="$ml.change(lang); $forceUpdate()" v-text="lang" :class="{ 'bg-gray-700': $ml.current !== lang, 'bg-r-blue': $ml.current === lang }" )
+      button(class="flex m-1 p-2 text-xs md:text-md md:p-3 text-white rounded-md text-center outline-none capitalize focus:outline-none select-none" v-for="lang in $ml.list" :key="lang" @click="changeLang(lang)" v-text="lang" :class="{ 'bg-gray-700': $ml.current !== lang, 'bg-r-blue': $ml.current === lang }" )
     div(class="z-20 text")
       h3(class="uppercase font-secondary") {{ $ml.get('home').greeting }}
       h1(class="uppercase font-primary flex") 
@@ -55,14 +55,23 @@ export default {
     animatedBackground,
     changePage
   },
+ 
   mounted() {
     this.dynamicTitle = this.$ml.get('home').titles[0]
     this.animateDynamicTitle(anime.timeline())
+    this.testRo = () => {
+      console.log(this.$route)
+    }
   },
   beforeDestroy() {
     this.animate = false
   },
   methods: {
+    changeLang(lang) {
+      if(lang === this.$ml.current) return
+      this.$ml.change(lang)
+      this.$router.push({ name: 'Home', params: { lang: lang }})
+    },
     animateDynamicTitle(tl) {
         if(!this.animate) return
         tl.add({
@@ -181,6 +190,4 @@ export default {
 
         .about
           border: none
-
-        .portfolio
 </style>

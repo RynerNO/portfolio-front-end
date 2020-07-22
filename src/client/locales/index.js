@@ -1,5 +1,7 @@
-import { MLCreate } from 'vue-multilanguage'
+import Vue from 'vue'
+import { MLInstaller, MLCreate } from 'vue-multilanguage'
 
+Vue.use(MLInstaller)
 import ru from '@locales/lang/ru'
 import en from '@locales/lang/en'
 

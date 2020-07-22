@@ -16,6 +16,10 @@ export default {
       htmlAttrs: {
           lang: this.$ml.current     
       },
+      meta: [
+        {name: 'description', content: this.$ml.get('about').aboutMe},
+        {name:"author", content:"Andrey ***REMOVED***"}
+      ],
       titleTemplate: (titleChunk) => {
           return titleChunk ? `${titleChunk} | Junior Front-End Developer` : 'Junior Front-End Developer';
       }  
@@ -29,15 +33,23 @@ export default {
   },
   created() {
     this.$router.beforeEach((to, from, next) => {
-          const indexTo = this.pages.indexOf(to.path.replace('/', ''));
-          const indexFrom = this.pages.indexOf(from.path.replace('/', ''));
+          const indexTo = this.pages.indexOf(to.path.replace(/\//g, '').replace(to.params.lang, ''));
+          const indexFrom = this.pages.indexOf(from.path.replace(/\//g, '').replace(from.params.lang, ''));
           if (indexFrom > indexTo) {
                 this.transitionName = 'slide-right'
           } else {
                 this.transitionName = 'slide-left'
-				  }
+          }
       next();
     });
+    
+   
+    
+  },
+  updated() {
+     if(!!this.$route.params.lang) {
+      this.$ml.change(this.$route.params.lang)
+    }
   },
   methods: {
    enter(el, done) {

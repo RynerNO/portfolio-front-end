@@ -1,5 +1,5 @@
 <template lang="pug">
-	section(class="h-full")
+	section(class="h-full overflow-x-hidden")
 		div(class="mx-auto" class="container")
 			div(class="grid grid-cols-3" :class="{slideOut: infoSlideActive}")
 				div(class="col-span-3" class="titleContainer")
@@ -45,7 +45,7 @@
 							font-awesome(icon="external-link-alt") 
 							| {{ $ml.get('portfolio').buttons.preview }}
 		div(class="projectInfoOverlay" :class="{projectInfoOverlayActive: infoSlideActive}" @click="closeSlide")
-		changePage
+		change-page
 </template>
 
 <script>

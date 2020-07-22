@@ -1,134 +1,136 @@
 <template lang="pug">
-div(class='changePage pointer-events-none' )
-	div(class='pageLoadBar')
-	nav(class="flex flex-col topNav" )
-		button(class="pointer-events-auto navButton" @click='navOpen = !navOpen' :class="{navButtonActive : navOpen}")
-			span
-		ul(class="flex flex-col uppercase cursor-pointer" :class="{ ulShow: navOpen   }")
-			li(:class="currentPage  === 'home' ? 'active' : ''" @click.once="animateLoadBar('home')")
-				a
-					font-awesome(icon="home")
-					span {{ $ml.get('home').meta.title }}
-					
-			li(:class="currentPage  === 'about' ? 'active' : ''" @click.once="animateLoadBar('about')")
-				a
-					font-awesome(icon="user" )
-					span {{ $ml.get('about').meta.title }}
-				li(:class="currentPage  === 'portfolio' ? 'active' : ''" @click.once="animateLoadBar('portfolio')") 	
-					a
-						font-awesome(icon="briefcase")
-						span {{ $ml.get('portfolio').meta.title }}
-				li(:class='currentPage  === "contact" ? "active" : ""' @click.once="animateLoadBar('contact')") 	
-					a
-						font-awesome(icon="comments")
-						span {{ $ml.get('contact').meta.title }}
-		span( class="navBg" :class='navOpen ? "navBgShow" : ""' )
-	nav(class="flex flex-col pointer-events-auto topNav" )
-		button(@click="navOpen = !navOpen" class="navButton" :class="{navButtonActive: navOpen}")
-			span
-		span(class="navBg" :class="{ navBgShow: navOpen }")
-	div(class="arrowContainer previousPage" :class="{nextPageAnimate:animate }" @click.once='previousPage' v-if='pagePrevious')
-		span
-			span {{ $ml.get(pagePrevious).meta.title }}
-	div(class="arrowContainer nextPage" :class="{ nextPageAnimate: animate }" @click.once='nextPage' v-if='pageNext')
-		span
-			span {{ $ml.get(pageNext).meta.title }}
+div(class='changePage pointer-events-none')
+  div(class='pageLoadBar')
+  nav(class="flex flex-col topNav" )
+    button(class="pointer-events-auto navButton" @click='navOpen = !navOpen' :class="{navButtonActive : navOpen}")
+      span
+    ul(class="flex flex-col uppercase cursor-pointer" :class="{ ulShow: navOpen   }")
+      li(:class="currentPage  === 'home' ? 'active' : ''" @click.once="animateLoadBar('home')")
+        a
+          font-awesome(icon="home")
+          span {{ $ml.get('home').meta.title }}
+          
+      li(:class="currentPage  === 'about' ? 'active' : ''" @click.once="animateLoadBar('about')")
+        a
+          font-awesome(icon="user" )
+          span {{ $ml.get('about').meta.title }}
+        li(:class="currentPage  === 'portfolio' ? 'active' : ''" @click.once="animateLoadBar('portfolio')") 	
+          a
+            font-awesome(icon="briefcase")
+            span {{ $ml.get('portfolio').meta.title }}
+        li(:class='currentPage  === "contact" ? "active" : ""' @click.once="animateLoadBar('contact')") 	
+          a
+            font-awesome(icon="comments")
+            span {{ $ml.get('contact').meta.title }}
+    span( class="navBg" :class='navOpen ? "navBgShow" : ""' )
+  nav(class="flex flex-col pointer-events-auto topNav" )
+    button(@click="navOpen = !navOpen" class="navButton" :class="{navButtonActive: navOpen}")
+      span
+    span(class="navBg" :class="{ navBgShow: navOpen }")
+  div(class="arrowContainer previousPage" :class="{nextPageAnimate:animate }" @click.once='previousPage' v-if='pagePrevious')
+    span
+      span {{ $ml.get(pagePrevious).meta.title }}
+  div(class="arrowContainer nextPage" :class="{ nextPageAnimate: animate }" @click.once='nextPage' v-if='pageNext')
+    span
+      span {{ $ml.get(pageNext).meta.title }}
 
 
 </template>
 
 <script>
-	import anime from 'animejs/lib/anime.es.js';
-	export default {
+  import anime from 'animejs/lib/anime.es.js';
+  export default {
 
-		data: () => {
-			return {
-				animate: false,
-				pages: ['home', 'about', 'portfolio', 'contact'],
-				navOpen: false,
-			}
-		},
-		computed: {
-			currentPage() {
-				const index = this.$route.path === '/' ? 0 : this.pages.indexOf(this.$route.path.replace('/', ''));
-				return this.pages[index]
-			},
-			pagePrevious() {
-				const index = this.pages.indexOf(this.$route.path.replace('/', ''));
-				if (index !== -1 && index !== 0) {
-					return this.pages[index - 1]
-				} else {
-					return false;
-				}
-			},
-			pageNext() {
-				const index = this.$route.path === '/' ? 0 : this.pages.indexOf(this.$route.path.replace('/', ''));
-				if (index !== -1 && index !== this.pages.length - 1) {
-					return this.pages[index + 1]
-				} else {
-					return false;
-				}
-			}
-		},
-		methods: {
-			animateLoadBar(route) {
-				if(route === this.currentPage) {
-					return;
-					}
-				anime({
-					targets: '.pageLoadBar',
-					width: '100%',
-					easing: 'easeInOutQuad',
-					duration: 300,
-					complete: () => {
-						this.$router.push(`/${route}`)
-						this.animate = false;
-						anime({
-							targets: '.pageLoadBar',
-							width: '0%',
-							easing: 'easeInOutQuad',
-							duration: 0,
-						})
-					}
-				})
-			},
-			animatePageChangeArrows() {
-				this.animate = !this.animate;
-				anime({
-					targets: '.nextPage',
-					translateX: 250,
-					opacity: 0,
-					easing: 'easeInOutQuad',
-					delay: 300,
-					duration: 100
-				})
-				anime({
-					targets: '.previousPage',
-					translateX: -250,
-					opacity: 0,
-					easing: 'easeInOutQuad',
-					delay: 300,
-					duration: 100
-				})
-			},
-			nextPage: function() {
-				this.animatePageChangeArrows()
-				this.animateLoadBar(this.pageNext)
+    data: () => {
+      return {
+        animate: false,
+        pages: ['home', 'about', 'portfolio', 'contact'],
+        navOpen: false,
+      }
+    },
+    computed: {
+      currentPage() {
+        const index = this.$route.path === '/' ? 0 : this.pages.indexOf(this.$route.path.replace(/\//g, '').replace(this.$route.params.lang, ''));
+        return this.pages[index]
+      },
+      pagePrevious() {
+        const index = this.pages.indexOf(this.$route.path.replace(/\//g, '').replace(this.$route.params.lang, ''));
+        if (index !== -1 && index !== 0) {
+          return this.pages[index - 1]
+        } else {
+          return false;
+        }
+      },
+      pageNext() {
+        const index = this.$route.path === '/' ? 0 : this.pages.indexOf(this.$route.path.replace(/\//g, '').replace(this.$route.params.lang, ''));
+        if (index !== -1 && index !== this.pages.length - 1) {
+          return this.pages[index + 1]
+        } else {
+          return false;
+        }
+      }
+    },
+    methods: {
+      animateLoadBar(route) {
+        if(route === this.currentPage) {
+          return;
+          }
+        anime({
+          targets: '.pageLoadBar',
+          width: '100%',
+          easing: 'easeInOutQuad',
+          duration: 300,
+          complete: () => {
+            this.$router.push(`/${this.$ml.current}/${route}`)
+            this.animate = false;
+            anime({
+              targets: '.pageLoadBar',
+              width: '0%',
+              easing: 'easeInOutQuad',
+              duration: 0,
+            })
+          }
+        })
+      },
+      animatePageChangeArrows() {
+        this.animate = !this.animate;
+        anime({
+          targets: '.nextPage',
+          translateX: 250,
+          opacity: 0,
+          easing: 'easeInOutQuad',
+          delay: 300,
+          duration: 100
+        })
+        anime({
+          targets: '.previousPage',
+          translateX: -250,
+          opacity: 0,
+          easing: 'easeInOutQuad',
+          delay: 300,
+          duration: 100
+        })
+      },
+      nextPage() {
+        if(!this.pageNext) return;
+        this.animatePageChangeArrows()
+        this.animateLoadBar(this.pageNext)
 
-			},
-			previousPage() {
-				this.animatePageChangeArrows()
-				this.animateLoadBar(this.pagePrevious)
+      },
+      previousPage() {
+        if(!this.pagePrevious) return;
+        this.animatePageChangeArrows()
+        this.animateLoadBar(this.pagePrevious)
 
-			},
-		},
-	}
+      },
+    },
+  }
 </script>
 
 <style lang="sass" scoped>
 .changePage
   @apply fixed
-
+  pointer-events: none
   width: 100%
   height: 100%
   z-index: 15

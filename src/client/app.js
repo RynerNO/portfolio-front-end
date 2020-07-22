@@ -7,8 +7,9 @@ import './styles/tailwind.scss';
 import router from './router';
 import Router from 'vue-router';
 
+
+
 import '@locales'
-import { MLInstaller } from 'vue-multilanguage'
 
 import Meta from 'vue-meta'
 
@@ -18,7 +19,6 @@ import { faGithub, faSkype } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add([faUser, faBriefcase, faFileAlt, faHourglass, faExternalLinkAlt, faTimes, faFileCode, faEnvelope, faComments, faPaperPlane, faHome, faGithub, faSkype])
 
-import Vue2TouchEvents from 'vue2-touch-events'
  
 import store from '@store/store';
 
@@ -26,8 +26,7 @@ Vue.use(Router);
 Vue.use(Meta, {
   keyName: 'meta'
 });
-Vue.use(Vue2TouchEvents)
-Vue.use(MLInstaller)
+
 
 Vue.component('font-awesome', FontAwesomeIcon)
 
