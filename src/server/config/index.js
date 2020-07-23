@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 export default {
@@ -11,5 +10,5 @@ export default {
   mailtTo: process.env.MAIL_TO,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   clientID: process.env.GOOGLE_CLIENT_ID,
-  refreshToken: process.env.GOOGLE_REFRESH_TOKEN
+  refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
 };

@@ -11,7 +11,6 @@
         ["module-resolver", {
             "root": ["./"], 
             "alias": {
-                "@root": "./",
                 "@mixins": "./src/client/mixins",
                 "@styles": "./src/client/styles",
                 "@assets": "./src/client/assets",
@@ -29,6 +28,7 @@
                 "@middleware" : "./src/server/middleware"
             }}
         ],
+        ["babel-plugin-root-import"],
         ["@babel/plugin-transform-runtime",
             {
               "regenerator": true
