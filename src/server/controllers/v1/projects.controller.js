@@ -4,6 +4,7 @@ import simpleGit from 'simple-git';
 import webp from 'webp-converter';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import rmdir from 'rimraf';
 
 
 const getProjects = async (req, res) => {
@@ -56,7 +57,11 @@ const deleteProject = async (req, res) => {
   try {
     const project = await Project().findOne({ git: git })
     await Project().deleteOne({ git: git })
-    await fs.promises.unlink(path.resolve('dist', `public/site_previews/${project.projectFolder}`))
+    rmdir(path.resolve('dist', `public/site_previews/${project.projectFolder}`), function (error) {
+      if (error) {
+        console.error(error)
+      }
+    });
     return res.status(200).json({
       message: 'Project deleted'
     })
