@@ -6,7 +6,12 @@ import config from '@config';
 
 import v1Router from '@routes';
 
+import Webpack from 'webpack';
 
+import WebpackConfig from '../../webpack.dev';
+
+import WebpackDevMiddleware from 'webpack-dev-middleware';
+import WebpackHotMiddleware from 'webpack-hot-middleware';
 import dotenv from 'dotenv';
 
 
@@ -27,12 +32,7 @@ app.use(BodyParser.json());
 
 app.use(compression());
 if (process.env.NODE_ENV === 'development') {
-  import Webpack from 'webpack';
-
-  import WebpackConfig from '../../webpack.dev';
-
-  import WebpackDevMiddleware from 'webpack-dev-middleware';
-  import WebpackHotMiddleware from 'webpack-hot-middleware';
+ 
   const compiler = Webpack(WebpackConfig);
   app.use(
         WebpackDevMiddleware(compiler, {
