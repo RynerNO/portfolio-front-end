@@ -8,7 +8,7 @@
     "prod:serve": "babel-node dist/index.js --progress",
     "prettier": "prettier --write \"./**/*.js\"",
     "build:client": "webpack --config webpack.prod.js",
-    "build:server": "babel --ignore ./server/*.dev.js server/ --out-dir dist/ ",
+    "build:server": "babel src/server/ --out-dir dist/ ",
     "build": "yarn run build:server && yarn run build:client"
   },
   "dependencies": {
