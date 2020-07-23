@@ -79,7 +79,7 @@ export default {
   
       {
         name: 'Email',
-        value: '***REMOVED***',
+        value: 'ryner.no@gmail.com',
       },
       {
         name: 'Skype',

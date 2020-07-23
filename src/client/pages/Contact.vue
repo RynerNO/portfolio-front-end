@@ -11,7 +11,7 @@
             p 
               font-awesome(icon='envelope')
               |Email
-            h6 ***REMOVED***
+            h6 ryner.no@gmail.com
           div(class="my-2")
             p 
               font-awesome(:icon=['fab', 'skype'])
