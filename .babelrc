@@ -28,7 +28,6 @@
                 "@middleware" : "./src/server/middleware"
             }}
         ],
-        ["babel-plugin-root-import"],
         ["@babel/plugin-transform-runtime",
             {
               "regenerator": true
