@@ -5,5 +5,13 @@ package-lock.json
 yarn-error.log
 
 .env
+!/dist/
 
-dist
+/dist/*
+
+!/dist/public/
+
+/dist/public/site_previews
+/dist/public/temp
+/dist/public/*.js
+/dist/public/*.svg
