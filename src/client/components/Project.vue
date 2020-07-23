@@ -9,7 +9,7 @@
               img(:src="`${filesLink}/poster.png`" alt="Project preview image")
             div(class="project__hover")
               div(class="project__bg")
-              button(class="project__btn" @click="$emit('click', previewLink)")
+              button(class="project__btn" @click="$emit('click', {previewLink, filesLink})")
                 span {{ btnText }}
 </template>
 <script>
@@ -56,13 +56,13 @@ export default {
   },
   computed: {
     filesLink() {
-      return `site_previews/${this.projectFolder}`
+      return `/site_previews/${this.projectFolder}`
     },
     previewLink() {
       if(this.link.length > 0) {
         return `${this.link}/${this.index}`
       } else {
-        return `site_previews/${this.projectFolder}/${this.index}`
+        return `/site_previews/${this.projectFolder}/${this.index}`
       }
     }
 

@@ -4,36 +4,35 @@ const router = new Router({
   routes: [
     {
       path: '/:lang?/about',
-      name: 'About',
+      name: 'about',
       component: () => import('@pages/About.vue')
     },
     {
       path: '/:lang?/portfolio',
-      name: 'Portfolio',
+      name: 'portfolio',
       component: () => import('@pages/Portfolio.vue')
     },
     {
       path: '/:lang?/contact',
-      name: 'Contact',
+      name: 'contact',
       component: () => import('@pages/Contact.vue')
-    },
-    {
-      path: '/:lang?/home',
-      alias: ['/:lang?'],
-      name: 'Home',
-      component: () => import('@pages/Home.vue'),
     },
     { 
       path: '/admin',
-      name: 'Admin',
+      name: 'admin',
       component: () => import('@pages/AdminPanel.vue')
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: () => import('@pages/Login.vue')
     },
-   
+    {
+      path: '/:lang?',
+      alias: ['/:lang?/home'],
+      name: 'home',
+      component: () => import('@pages/Home.vue'),
+    },
     { 
       path: '/404', 
       name: '404', 
@@ -49,11 +48,17 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-  if(to.name === 'Admin' || to.name === 'Login' || to.name === '404') {
+  if(to.name === 'admin' || to.name === 'login' || to.name === '404') {
     return next()
   }
   if (to.params.lang !== undefined && router.app.$ml.list.indexOf(to.params.lang) === -1) {
     return next({name: '404'})
+  }
+  if (to.params.lang === undefined && router.app.$ml.current === 'en') {
+    return next()
+  }
+  if (to.params.lang === 'en' && router.app.$ml.current === 'en') {
+    return next({name: to.name, replace: true})
   }
   if(router.app.$ml.list.indexOf(to.params.lang) === -1) {
   return next({ path: `/${router.app.$ml.current}${to.path}`, replace: true})

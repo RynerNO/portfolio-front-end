@@ -13,8 +13,8 @@
 			div(class="projectInfoContainer" class="grid grid-cols-3")
 				div(class="col-span-3" class="projectInfoImage")
 					picture
-						source(:srcset="`site_previews/${slideProps.projectFolder}/poster.webp`" type="image/webp")
-						img(:src="`site_previews/${slideProps.projectFolder}/poster.png`" alt="Project preview image")
+						source(:srcset="`${slideProps.filesLink}/poster.webp`" type="image/webp")
+						img(:src="`${slideProps.filesLink}/poster.png`" alt="Project preview image")
 				div(class="col-span-3 flex justify-between items-center")
 					h3(class="projectInfoTitle") {{ slideProps.title }}
 					button(class="closeButton" @click="closeSlide")
@@ -72,10 +72,11 @@ export default {
     }
       },
   methods: {
-      showSlide(previewLink, project) {
+      showSlide({previewLink, filesLink}, project) {
       this.slideProps = {
         ...project,
-        link: previewLink
+        link: previewLink,
+        filesLink
       }
       this.infoSlideActive = true;
     },

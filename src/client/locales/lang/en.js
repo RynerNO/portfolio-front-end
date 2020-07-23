@@ -71,5 +71,8 @@ export default new MLanguage('en').create({
     meta: {
       title: "Contacts"
     }
+  },
+  '404': {
+    text: 'Page not found'
   }
 })

@@ -20,9 +20,29 @@ export default {
         {name: 'description', content: this.$ml.get('about').aboutMe},
         {name:"author", content:"Andrey ***REMOVED***"}
       ],
+      link: [
+        {rel: 'canonical', href: `${window.location.origin}${this.$route.path}`},
+        {rel: 'alternate', href: this.engRoute, hreflang: 'en'},
+        {rel: 'alternate', href: this.engRoute, hreflang: 'x-default'},
+        {rel: 'alternate', href: this.rusRoute, hreflang: 'ru'}
+      ],
       titleTemplate: (titleChunk) => {
           return titleChunk ? `${titleChunk} | Junior Front-End Developer` : 'Junior Front-End Developer';
       }  
+    }
+  },
+  computed: {
+    engRoute() {
+      const path = (this.$route.params.lang !== undefined) 
+      ? this.$route.path.replace(`/${this.$route.params.lang}`, '') 
+      : this.$route.path
+      return `${window.location.origin}${path}`
+    },
+    rusRoute() {
+      const path = (this.$route.params.lang !== undefined) 
+      ? this.$route.path.replace(`${this.$route.params.lang}`, 'ru') 
+      : `/ru${this.$route.path}`
+      return `${window.location.origin}${path}`
     }
   },
   data() {

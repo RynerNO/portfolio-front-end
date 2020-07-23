@@ -70,7 +70,10 @@ export default {
     changeLang(lang) {
       if(lang === this.$ml.current) return
       this.$ml.change(lang)
-      this.$router.push({ name: 'Home', params: { lang: lang }})
+      const params = (this.$defaultLang === lang) ? {} : {lang: lang}
+      this.$router.push({ name: 'home', params: params})
+      
+      
     },
     animateDynamicTitle(tl) {
         if(!this.animate) return

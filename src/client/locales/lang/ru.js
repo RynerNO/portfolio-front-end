@@ -68,6 +68,9 @@ export default new MLanguage('ru').create({
     meta: {
       title: "Контакты"
     }
+  },
+  '404': {
+    text: 'Страница не найдена'
   }
 
 })

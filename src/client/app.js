@@ -22,6 +22,8 @@ library.add([faUser, faBriefcase, faFileAlt, faHourglass, faExternalLinkAlt, faT
  
 import store from '@store/store';
 
+
+
 Vue.use(Router);
 Vue.use(Meta, {
   keyName: 'meta'

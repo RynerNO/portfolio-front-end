@@ -50,7 +50,7 @@ div(class='changePage pointer-events-none')
     },
     computed: {
       currentPage() {
-        const index = this.$route.path === '/' ? 0 : this.pages.indexOf(this.$route.path.replace(/\//g, '').replace(this.$route.params.lang, ''));
+        const index = this.$route.path.replace(this.$route.params.lang, '') === '/' ? 0 : this.pages.indexOf(this.$route.path.replace(/\//g, '').replace(this.$route.params.lang, ''));
         return this.pages[index]
       },
       pagePrevious() {
@@ -62,7 +62,7 @@ div(class='changePage pointer-events-none')
         }
       },
       pageNext() {
-        const index = this.$route.path === '/' ? 0 : this.pages.indexOf(this.$route.path.replace(/\//g, '').replace(this.$route.params.lang, ''));
+        const index = this.$route.path.replace(this.$route.params.lang, '') === '/' ? 0 : this.pages.indexOf(this.$route.path.replace(/\//g, '').replace(this.$route.params.lang, ''));
         if (index !== -1 && index !== this.pages.length - 1) {
           return this.pages[index + 1]
         } else {
@@ -81,7 +81,8 @@ div(class='changePage pointer-events-none')
           easing: 'easeInOutQuad',
           duration: 300,
           complete: () => {
-            this.$router.push(`/${this.$ml.current}/${route}`)
+            const params = (this.$defaultLang === this.$ml.current) ? {} : {lang: this.$ml.current};
+            this.$router.push({ name: route, params: params})
             this.animate = false;
             anime({
               targets: '.pageLoadBar',

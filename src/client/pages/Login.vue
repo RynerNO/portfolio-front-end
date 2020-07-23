@@ -27,10 +27,16 @@ extend('required', required);
 localize('ru', ru);
 import { POST_LOGIN, SET_AUTH} from '@store/auth/actions'
 export default {
-components: {
-  ValidationProvider,
-  ValidationObserver,
-},
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
+  meta: {
+      title: 'Login',
+      meta: [
+        { name: 'robots', content: 'noindex, nofollow'  },
+      ]
+    },
   data: () => { 
     return {
         username: '',
