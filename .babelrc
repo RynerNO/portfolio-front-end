@@ -11,6 +11,7 @@
         ["module-resolver", {
             "root": ["./"], 
             "alias": {
+                "@root": "./",
                 "@mixins": "./src/client/mixins",
                 "@styles": "./src/client/styles",
                 "@assets": "./src/client/assets",

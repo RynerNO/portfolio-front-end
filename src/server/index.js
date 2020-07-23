@@ -8,7 +8,7 @@ import v1Router from '@routes';
 
 import Webpack from 'webpack';
 
-import WebpackConfig from '../../webpack.dev';
+import WebpackConfig from '@root/webpack.dev';
 
 import WebpackDevMiddleware from 'webpack-dev-middleware';
 import WebpackHotMiddleware from 'webpack-hot-middleware';
