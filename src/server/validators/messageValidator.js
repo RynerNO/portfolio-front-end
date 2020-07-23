@@ -11,7 +11,7 @@ const messageSchema = Yup.object().shape({
 export default (req, res, next) => {
   messageSchema.validate(req.body)
     .then(() => {
-      const secret_key = congig.recaptchaSecret;
+      const secret_key = config.recaptchaSecret;
       const token = req.body.token;
       const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret_key}&response=${token}`;
   
