@@ -114,7 +114,7 @@ export default {
       this.failCaptcha = false;
     },
     sendMessage(token) {
-      axios.post('sendMessage', this.message).then(response => {
+      axios.post('mail/send', this.message).then(response => {
         this.$refs.observer.reset()
         this.message.name = '';
         this.message.email = '';

@@ -6,6 +6,7 @@
     ],
     "ignore": [
         "./server/public",
+        "/node_modules/",
     ],
     "plugins": [
         ["module-resolver", {

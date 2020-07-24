@@ -14,12 +14,9 @@ export default (req, res, next) => {
       const secret_key = config.recaptchaSecret;
       const token = req.body.token;
       const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret_key}&response=${token}`;
-  
       axios.post(url)
         .then(response => {
-          console.log(response)
           if (response.data.success) {
-           
             next()
           } else {
 
@@ -34,7 +31,7 @@ export default (req, res, next) => {
       
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
       res.status(422).json({
         [error.path]: error.message
       });
