@@ -19,10 +19,11 @@ module.exports = merge(dev, {
       {
         test: /\.js$/,
 
-        use: {
-          loader: 'babel-loader'
-        },
+        use: [
+          { loader: 'babel-loader', options: { compact: false}}
+        ],
         exclude: /node_modules/,
+        
       },
     ]
   }

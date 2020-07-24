@@ -9,4 +9,15 @@ module.exports = merge(dev, {
     publicPath: '/',
  
   },
+  module: {
+    rules: [
+          {
+            test: /\.js$/,
+    
+            use: [
+              { loader: 'babel-loader', options: { compact: true}}
+            ]
+          },
+        ]
+  }
 });
