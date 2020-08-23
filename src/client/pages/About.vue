@@ -12,10 +12,7 @@
 							
 					
 		
-				div(class="buttonContainer")
-					a(class="button" target="_blank" rel="noopener noreferrer" href="***REMOVED***") 
-						span {{ $ml.get('about').buttons.resume}}
-				
+		
 				div(class="col-span-3")
 					hr(class="aboutHr")
 				h2(class="uppercase" class="skillsTitle") {{ $ml.get('about').skillsTitle }}

@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     unsetToken() {
-      this.message.token = '',
+      this.message.token = '';
       this.failCaptcha = true;
     },
     setToken(event) {
