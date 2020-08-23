@@ -93,10 +93,11 @@ const updateProject = async (req, res) => {
 const editProject = async (req, res) => {
   const { Title, Tech, Type, Duration, Description, Git, Index, OldGit } = req.body;
   try {
-    if (req.files.Poster) {
-      await webp.cwebp(path.resolve('dist', `public/temp/${req.files.Poster[0].filename}`), path.resolve('dist', `public/site_previews/${projectFolder}/poster.webp`), "-q 90");
-
-      mv(path.resolve('dist', `public/temp/${req.files.Poster[0].filename}`), path.resolve('dist', `public/site_previews/${projectFolder}/poster.png`))
+    const project = await Project().findOne({gitLink: OldGit})
+    if (req.files.Poster[0]) {
+      await webp.cwebp(path.resolve('dist', `public/temp/${req.files.Poster[0].filename}`), path.resolve('dist', `public/site_previews/${project.projectFolder}/poster.webp`), "-q 90");
+      
+      await fs.promises.rename(path.resolve('dist', `public/temp/${req.files.Poster[0].filename}`), path.resolve('dist', `public/site_previews/${project.projectFolder}/poster.png`))
     }
     await Project().updateOne({gitLink: OldGit}, {
       title: Title,
@@ -113,7 +114,7 @@ const editProject = async (req, res) => {
   } catch (e) {
     res.status(500).json({
       message: 'Edit error',
-      error: e
+      error: e.message
     })
   }
 }

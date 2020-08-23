@@ -59,7 +59,7 @@
         validation-provider(name="gitLink" rules="required" v-slot="{errors}")
           input(name="gitLink"  v-model="editor.gitLink" type='text' placeholder="Project git")
           span() {{ errors[0] }}
-        validation-provider(name="indexLocation" rules="required" v-slot="{errors}")
+        validation-provider(name="indexLocation" v-slot="{errors}")
           input(name="indexLocation"  v-model="editor.index" type='text' placeholder="Project Index File Location")
           span() {{ errors[0] }}
         validation-provider(name="link" v-slot="{errors}")
