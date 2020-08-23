@@ -18,7 +18,7 @@ export default {
       },
       meta: [
         {name: 'description', content: this.$ml.get('about').aboutMe},
-        {name:"author", content:"Andrey ***REMOVED***"}
+        {name:"author", content:"Andrey Khit"}
       ],
       link: [
         {rel: 'canonical', href: `${window.location.origin}${this.$route.path}`},

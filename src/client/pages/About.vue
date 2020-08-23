@@ -55,7 +55,7 @@ export default {
       },
       {
         name: 'Last Name',
-        value: '***REMOVED***',
+        value: 'Khit',
       },
       {
         name: 'Birthdate',
@@ -71,7 +71,7 @@ export default {
       },
       {
         name: 'Address',
-        value: '***REMOVED***',
+        value: 'Kherson',
       },
   
       {
