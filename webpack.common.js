@@ -80,5 +80,9 @@ module.exports = {
     staticDir: path.join(__dirname, 'dist', 'public'),
     // Required - Routes to render.
     routes: [ '/', '/about'],
+    postProcess (renderedRoute) {
+      renderedRoute.originalRoute = "https://ruiner.xyz"
+      return renderedRoute
+    }
   })]
 };

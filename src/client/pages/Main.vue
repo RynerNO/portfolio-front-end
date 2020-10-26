@@ -18,10 +18,10 @@ export default {
       },
       meta: [
         {name: 'description', content: this.$ml.get('about').aboutMe},
-        {name:"author", content:"Andrey Khit"}
+        {name:"author", content:"RynerNO"}
       ],
       link: [
-        {rel: 'canonical', href: `${window.location.origin}${this.$route.path}`},
+        {rel: 'canonical', href: `https://ruiner.xyz${this.$route.path}`},
         {rel: 'alternate', href: this.engRoute, hreflang: 'en'},
         {rel: 'alternate', href: this.engRoute, hreflang: 'x-default'},
         {rel: 'alternate', href: this.rusRoute, hreflang: 'ru'}
@@ -36,13 +36,13 @@ export default {
       const path = (this.$route.params.lang !== undefined) 
       ? this.$route.path.replace(`/${this.$route.params.lang}`, '') 
       : this.$route.path
-      return `${window.location.origin}${path}`
+      return `https://ruiner.xyz${path}`
     },
     rusRoute() {
       const path = (this.$route.params.lang !== undefined) 
       ? this.$route.path.replace(`${this.$route.params.lang}`, 'ru') 
       : `/ru${this.$route.path}`
-      return `${window.location.origin}${path}`
+      return `https://ruiner.xyz${path}`
     }
   },
   data() {
