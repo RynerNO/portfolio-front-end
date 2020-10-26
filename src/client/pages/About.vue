@@ -54,14 +54,6 @@ export default {
         value: 'Andrey',
       },
       {
-        name: 'Last Name',
-        value: 'Khit',
-      },
-      {
-        name: 'Birthdate',
-        value: '21.10.1998',
-      },
-      {
         name: 'Nationality',
         value: 'Ukrainian',
       },
@@ -70,19 +62,9 @@ export default {
         value: '1 year',
       },
       {
-        name: 'Address',
-        value: 'Kherson',
-      },
-  
-      {
         name: 'Email',
         value: 'ryner.no@gmail.com',
       },
-      {
-        name: 'Skype',
-        value: 'live:ryner.no',
-      },
-  
       {
         name: 'Github',
         value: 'RynerNO',
