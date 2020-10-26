@@ -60,7 +60,12 @@ export default {
     },
     previewLink() {
       if(this.link.length > 0) {
-        return `${this.link}/${this.index}`
+        if(this.link.endsWith('/')) {
+          return `${this.link}${this.index}`
+        } else {
+          return `${this.link}/${this.index}`
+        }
+        
       } else {
         return `/site_previews/${this.projectFolder}/${this.index}`
       }

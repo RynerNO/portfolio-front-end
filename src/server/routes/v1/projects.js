@@ -30,6 +30,6 @@ const router = new Router();
 router.get('/get', controller.getProjects)
 router.post('/add', authMiddleware, upload.fields([{ name: 'Poster', maxCount: 1 }]), controller.addProject)
 router.post('/edit', authMiddleware, upload.fields([{ name: 'Poster', maxCount: 1 }]), controller.editProject)  
-router.post('/delete', authMiddleware, controller.deleteProject)
-router.post('/update', authMiddleware, controller.updateProject)
+router.post('/delete', authMiddleware,  upload.none(), controller.deleteProject)
+router.post('/update', authMiddleware, upload.none(), controller.updateProject)
 export default router;

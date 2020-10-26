@@ -15,7 +15,7 @@ const getProjects = async (req, res) => {
 };
 
 const addProject = async (req, res) => {
-  const { Title, Tech, Type, Duration, Description, Git, Index, Link } = req.body;
+  let { Title, Tech, Type, Duration, Description, Git, Index, Link } = req.body;
   try {
     const projectFolder = uuidv4()
 
@@ -28,6 +28,9 @@ const addProject = async (req, res) => {
     await webp.cwebp(path.resolve('dist', `public/temp/${req.files.Poster[0].filename}`), path.resolve('dist', `public/site_previews/${projectFolder}/poster.webp`), "-q 90");
 
     await fs.promises.rename(path.resolve('dist', `public/temp/${req.files.Poster[0].filename}`), path.resolve('dist', `public/site_previews/${projectFolder}/poster.png`))
+    if(!Index) {
+      Index = ""
+    }
     await Project().create({
       title: Title,
       tech: Tech,
@@ -55,8 +58,8 @@ const addProject = async (req, res) => {
 const deleteProject = async (req, res) => {
   const { git } = req.body;
   try {
-    const project = await Project().findOne({ git: git })
-    await Project().deleteOne({ git: git })
+    const project = await Project().findOne({ gitLink: git })
+    await Project().deleteOne({ gitLink: git })
     rmdir(path.resolve('dist', `public/site_previews/${project.projectFolder}`), function (error) {
       if (error) {
         console.error(error)
@@ -77,7 +80,7 @@ const deleteProject = async (req, res) => {
 const updateProject = async (req, res) => {
   try {
     const { git } = req.body;
-    const project = await Project().findOne({ git: git })
+    const project = await Project().findOne({ gitLink: git })
     const Git = simpleGit(path.resolve('dist', `public/site_previews/${project.projectFolder}`))
     await Git.pull('origin', 'master')
     res.status(200).json({ 

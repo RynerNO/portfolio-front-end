@@ -237,6 +237,8 @@ methods: {
     this.showEditor = false
     const formData = new FormData();
     formData.append('git', this.editor.oldGit)
+    formData.append('Test', 'ttttttttttttt')
+    console.log(this.editor.oldGit)
     this.$store.dispatch(POST_DELETE, formData).then(() => {
       this.updateProjects()
       this.editor = null
@@ -246,6 +248,7 @@ methods: {
   updateProject() {
     const formData = new FormData();
     formData.append('git', this.editor.oldGit)
+    
     this.$store.dispatch(POST_UPDATE, formData).then(() => {
       this.updateProjects()
       this.editor = null

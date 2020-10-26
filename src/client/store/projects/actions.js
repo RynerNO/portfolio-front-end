@@ -26,10 +26,10 @@ export default {
   },
   [POST_DELETE]: ({ commit, rootState }, data) => {
     return new Promise((resolve, reject) => {
-      client.post('/projects/delete', data, { headers: { 'access_token': rootState.auth.token, 'Content-Type': 'multipart/form-data'} }).then((response) => {
+      client.post('/projects/delete', data, { headers: {'access_token': rootState.auth.token, 'Content-Type': 'multipart/form-data'} }).then((response) => {
         resolve(response)
-      }).catch((err) => {
-        reject(err)
+      }).catch((error) => {
+        reject(error)
       })
     })
   },

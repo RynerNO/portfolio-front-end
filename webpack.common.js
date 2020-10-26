@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const PrerenderSPAPlugin = require('prerender-spa-plugin')
 module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist/public')
@@ -74,5 +75,10 @@ module.exports = {
       },
     ]
   },
-  plugins: [new VueLoaderPlugin()]
+  plugins: [new VueLoaderPlugin(), new PrerenderSPAPlugin({
+    // Required - The path to the webpack-outputted app to prerender.
+    staticDir: path.join(__dirname, 'dist', 'public'),
+    // Required - Routes to render.
+    routes: [ '/', '/about'],
+  })]
 };
