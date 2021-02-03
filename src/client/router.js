@@ -34,6 +34,11 @@ const router = new Router({
       component: () => import('@pages/Home.vue'),
     },
     { 
+      path: '/preview/:id', 
+      name: 'preview', 
+      component: () => import('@pages/Preview.vue'), 
+    },
+    { 
       path: '/404', 
       name: '404', 
       component: () => import('@pages/404.vue'), 

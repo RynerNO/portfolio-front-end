@@ -69,6 +69,9 @@ export default new MLanguage('ru').create({
       title: 'Контакты',
     },
   },
+  preview: {
+    currentPage: 'Текущая страница:'
+  },
   '404': {
     text: 'Страница не найдена',
   },

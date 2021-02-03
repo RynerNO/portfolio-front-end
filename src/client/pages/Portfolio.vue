@@ -40,7 +40,7 @@
 							span
 								|Github:&nbsp;
 								a(:href="slideProps.gitLink" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-500") {{ slideProps.title}}
-					a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`${slideProps.link}`")
+					a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`/preview/${slideProps.projectFolder}`")
 						span
 							font-awesome(icon="external-link-alt") 
 							| {{ $ml.get('portfolio').buttons.preview }}

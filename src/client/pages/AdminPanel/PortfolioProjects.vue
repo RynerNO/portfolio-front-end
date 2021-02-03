@@ -82,10 +82,9 @@
 <script>
 
 
-import axios from "@utils/axios"
+
 import { GET_PROJECTS } from "@store/projects/actions"
 import { POST_ADD, POST_EDIT, POST_DELETE, POST_UPDATE} from "@store/projects/actions"
-import { UNSET_AUTH } from "@store/auth/actions"
 import vueFilePond from 'vue-filepond';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';

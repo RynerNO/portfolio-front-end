@@ -5,7 +5,7 @@ import webp from 'webp-converter';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import rmdir from 'rimraf';
-
+import mkdirp from 'mkdirp'
 
 const getProjects = async (req, res) => {
   const projects = await Project().find();
@@ -81,6 +81,7 @@ const updateProject = async (req, res) => {
   try {
     const { git } = req.body;
     const project = await Project().findOne({ gitLink: git })
+    await mkdirp(path.resolve('dist', `public/site_previews/${project.projectFolder}`));
     const Git = simpleGit(path.resolve('dist', `public/site_previews/${project.projectFolder}`))
     await Git.pull('origin', 'master')
     res.status(200).json({ 

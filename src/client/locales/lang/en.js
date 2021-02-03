@@ -70,7 +70,10 @@ export default new MLanguage('en').create({
     },
     meta: {
       title: 'Contacts',
-    },
+    },  
+  },
+  preview: {
+    currentPage: 'Current page:'
   },
   '404': {
     text: 'Page not found',

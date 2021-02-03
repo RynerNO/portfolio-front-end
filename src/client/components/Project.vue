@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     filesLink() {
-      return `/site_previews/${this.projectFolder}`
+      return `https://ruiner.xyz/site_previews/${this.projectFolder}`
     },
     previewLink() {
       if(this.link.length > 0) {
@@ -67,7 +67,7 @@ export default {
         }
         
       } else {
-        return `/site_previews/${this.projectFolder}/${this.index}`
+        return `https://ruiner.xyz/site_previews/${this.projectFolder}/${this.index}`
       }
     }
 
