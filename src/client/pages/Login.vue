@@ -9,6 +9,7 @@
           ValidationProvider(name="Password" rules="required" v-slot="{errors}")
            input(type="password" placeholder='Password' v-model="password" class="focus:border-2 focus:border-indigo-400 border-2 border-gray-400  rounded-lg p-2 my-2 outline-none w-full")
            p(class='text-red-600 text-lg w-full') {{ errors[0] }}
+          vue-recaptcha( ref="recaptcha" class="px-6 py-2" sitekey="6LdJzkcaAAAAAGmQLWSHJaDjIARXCNQVBlI9kQQb" :loadRecaptchaScript="true" @verify="setToken($event)" @expired="unsetToken()")
           button(type="submit" class="opacity-75 hover:opacity-100 bg-blue-600 rounded-lg py-4 px-16 my-2") Sign In
 </template>
 
@@ -21,7 +22,7 @@ import {
 } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
 import ru from 'vee-validate/dist/locale/ru.json';
-
+import VueRecaptcha from 'vue-recaptcha'
 extend('required', required);
 
 localize('ru', ru);
@@ -30,6 +31,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+    VueRecaptcha
   },
   meta: {
       title: 'Login',
@@ -41,10 +43,20 @@ export default {
     return {
         username: '',
         password: '',
+        token: '',
+        failCaptcha: true
     }
 
      },
     methods: {
+          unsetToken() {
+          this.token = '';
+          this.failCaptcha = true
+        },
+        setToken(event) {
+          this.token = event;
+          this.failCaptcha = false;
+        },
         setAuth: function (payload) {
             this.$store.commit(SET_AUTH, payload)
             localStorage.setItem('auth', JSON.stringify(payload))
@@ -55,7 +67,8 @@ export default {
       login() {
       this.$store.dispatch(POST_LOGIN, {
         username: this.username,
-        password: this.password
+        password: this.password,
+        token: this.token
       }).then( response =>{
           this.setAuth(response.data)
       }).catch(error => {

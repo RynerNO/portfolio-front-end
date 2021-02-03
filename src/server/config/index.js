@@ -6,5 +6,7 @@ export default {
   url: process.env.APP_URL || 'http://localhost:3000',
   jwtSecret: process.env.JWT_SERCET || 'hYW#T#H;%RCNozF=X!sh',
   recaptchaSecret: process.env.recaptchaSecret || '',
-  messageApi: process.env.MESSAGE_API || ''
+  messageApi: process.env.MESSAGE_API || '',
+  messageToken: process.env.MESSAGE_TOKEN || '',
+  recaptchaLoginSecret: process.env.LOGIN_RECAPTCHA_SECRET
 };
