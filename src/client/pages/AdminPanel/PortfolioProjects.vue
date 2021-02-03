@@ -2,81 +2,35 @@
   div.projects
     div.projects__list
       project.project__single-project(v-for="(project, index) of projects" :key="index" :btnText="'Edit'" v-bind="project" @click="editProject(project)")
-    validation-observer(ref="form" v-slot="{ handleSubmit }" v-show="!showEditor")
+    validation-observer(ref="form" v-slot="{ handleSubmit }")
       form(class='projects__form' @submit.prevent="handleSubmit(addProject)")
-        p Add Project
+        p(v-if="!editing") Add Project
+        p(v-if="editing") Edit Project
         validation-provider(name="title" rules="required" v-slot="{errors}")
-          input(name="title"  v-model="newProject.title" type='text' placeholder="Project title")
-          span() {{ errors[0] }}
-        validation-provider(name="description" rules="required" v-slot="{errors}")
-          input(name="description"  v-model="newProject.description" type='text' placeholder="Project description")
+          input(name="title"  v-model="project.title" type='text' placeholder="Project title")
           span() {{ errors[0] }}
         validation-provider(name="tech" rules="required" v-slot="{errors}")
-          input(name="tech"  v-model="newProject.tech" type='text' placeholder="Project tech")
+          input(name="tech"  v-model="project.tech" type='text' placeholder="Project tech")
           span() {{ errors[0] }}
-        validation-provider(name="type" rules="required" v-slot="{errors}")
-          input(name="type"  v-model="newProject.type" type='text' placeholder="Project type")
+        validation-provider(name="git" rules="required" v-slot="{errors}")
+          input(name="git"  v-model="project.git" type='text' placeholder="Project git")
           span() {{ errors[0] }}
-        validation-provider(name="duration" rules="required" v-slot="{errors}")
-          input(name="duration"  v-model="newProject.duration" type='text' placeholder="Project duration")
-          span() {{ errors[0] }}
-        validation-provider(name="gitLink" rules="required" v-slot="{errors}")
-          input(name="gitLink"  v-model="newProject.gitLink" type='text' placeholder="Project git")
-          span() {{ errors[0] }}
-        validation-provider(name="indexLocation" v-slot="{errors}")
-          input(name="indexLocation"  v-model="newProject.index" type='text' placeholder="Project Index File Location")
-          span() {{ errors[0] }}
+        validation-provider(name="pages" v-slot="{errors}")
+          div
+            h4(class="text-gray-900") Pages:
+            div(v-for="page in project.pages" :key="page.name" class="flex flex-col ml-3") 
+              h5(class="text-gray-900") Name: {{ page.name }}
+              h5(class="text-gray-900") Link: {{ page.link }}
+          input(name="page" type='text' ref="pageName" placeholder="Page name")
+          input(name="page" type='text' ref="pageLink" placeholder="Page Link")
+          button(class='btn successButton' @click.prevent="addPage") Add
+
         validation-provider(name="link" v-slot="{errors}")
-          input(name="link" v-model="newProject.link" type='text' placeholder="Project Direct Link")
+          input(name="link" v-model="project.link" type='text' placeholder="Project Direct Link")
           span() {{ errors[0] }}
-        filePond(
-            required="true"
-            ref="projectPoster"
-            accepted-file-types="image/png"
-          labelIdle="'Drag & Drop your project preview image or <span class='filepond--label-action'> Browse </span>'"
-            allow-multiple="false"
-            max-files="1"
-          )
-        button(class='btn successButton' type="submit") Submit Project
-    validation-observer(ref="formEdit" v-slot="{ handleSubmit }" v-show="showEditor")
-      form(class='projects__form' @submit.prevent="handleSubmit(sumbitEdit)")
-        p Edit Project
-        validation-provider(name="title" rules="required" v-slot="{errors}")
-          input(name="title"  v-model="editor.title" type='text' placeholder="Project title")
-          span() {{ errors[0] }}
-        validation-provider(name="description" rules="required" v-slot="{errors}")
-          input(name="description"  v-model="editor.description" type='text' placeholder="Project description")
-          span() {{ errors[0] }}
-        validation-provider(name="tech" rules="required" v-slot="{errors}")
-          input(name="tech"  v-model="editor.tech" type='text' placeholder="Project tech")
-          span() {{ errors[0] }}
-        validation-provider(name="type" rules="required" v-slot="{errors}")
-          input(name="type"  v-model="editor.type" type='text' placeholder="Project type")
-          span() {{ errors[0] }}
-        validation-provider(name="duration" rules="required" v-slot="{errors}")
-          input(name="duration"  v-model="editor.duration" type='text' placeholder="Project duration")
-          span() {{ errors[0] }}
-        validation-provider(name="gitLink" rules="required" v-slot="{errors}")
-          input(name="gitLink"  v-model="editor.gitLink" type='text' placeholder="Project git")
-          span() {{ errors[0] }}
-        validation-provider(name="indexLocation" v-slot="{errors}")
-          input(name="indexLocation"  v-model="editor.index" type='text' placeholder="Project Index File Location")
-          span() {{ errors[0] }}
-        validation-provider(name="link" v-slot="{errors}")
-          input(name="link" v-model="editor.link" type='text' placeholder="Project Direct Link")
-          span() {{ errors[0] }}
-        filePond(
-            required="false"
-            ref="editProjectPoster"
-            accepted-file-types="image/png"
-          labelIdle="'Drag & Drop new project preview image or <span class='filepond--label-action'> Browse </span>'"
-            allow-multiple="false"
-            max-files="1"
-          )
-        button(class='btn successButton' type="submit") Edit
-        button(class='btn successButton' @click.prevent="updateProject") Update 
-        button(class='btn errorButton' @click.prevent="deleteProject") Delete
-        button(class='btn warningButton' @click.prevent="cancelEdit") Cancel
+        button(class='btn successButton' type="submit") Submit
+        button(class='btn errorButton' v-if="editing" @click.prevent="deleteProject") Delete
+        button(class='btn errorButton' v-if="editing" @click.prevent="cancelEdit") Cancel
 </template>
 
 <script>
@@ -85,12 +39,6 @@
 
 import { GET_PROJECTS } from "@store/projects/actions"
 import { POST_ADD, POST_EDIT, POST_DELETE, POST_UPDATE} from "@store/projects/actions"
-import vueFilePond from 'vue-filepond';
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-const filePond = vueFilePond(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 import {
   ValidationProvider,
   extend,
@@ -107,7 +55,6 @@ localize('ru', ru);
 export default {
 components: {
   Project,
-  filePond,
   ValidationProvider,
   ValidationObserver,
 },
@@ -120,35 +67,16 @@ props: {
 data() {
   return {
     projects: [],
-    newProject: {
+    project: {
       title: '',
-      description: '',
       tech: '',
-      type: '',
-      duration: '',
-      gitLink: '',
-      index: '',
-      link: ''
+      git: '',
+      link: '',
+      pages: []
     },
     response: '',
     error: '',
-    showModalAddProject: false,
-    showEditor: false,
-    editor: {
-      title: '',
-      description: '',
-      tech: '',
-      type: '',
-      duration: '',
-      gitLink: '',
-      index: '',
-      link: '',
-      projectFolder: '',
-      oldGit: ''
-    },
-
-    infoSlideActive: true,
-   
+    editing: false,
   }
 },
 computed: {
@@ -160,102 +88,77 @@ created() {
 	  this.updateProjects()
 },
 methods: {
+  addPage() {
+    this.project.pages.push({
+      name: this.$refs.pageName.value,
+      link: this.$refs.pageLink.value
+    })
+  },
   updateProjects() {
     this.$store.dispatch(GET_PROJECTS).then(()=> {
-		this.projects = this.$store.state.projects.projects
+		this.projects = this.$store.state.projects.items
 	})
   },
   addProject() {
-    const formData = new FormData();
-    formData.append('Poster', this.$refs.projectPoster.getFiles()[0].file)
-    formData.append('Type', this.newProject.type)
-    formData.append('Duration', this.newProject.duration)
-    formData.append('Title', this.newProject.title)
-    formData.append('Description', this.newProject.description)
-    formData.append('Git', this.newProject.gitLink)
-    formData.append('Index', this.newProject.index)
-    formData.append('Link', this.newProject.link)
-    formData.append('Tech', this.newProject.tech.replace(' ', '').split(','))
-    this.$store.dispatch(POST_ADD, formData).then(() => {
+    this.project.pages.unshift({
+      name: 'Home',
+      link: this.project.link
+    })
+    if(!Array.isArray(this.project.tech)) this.project.tech = this.project.tech.replace(' ', '').split(',')
+    this.$store.dispatch(POST_ADD, {
+      Title: this.project.title,
+      Git: this.project.git,
+      Link: this.project.link,
+      Pages: this.project.pages,
+      Tech: this.project.tech,
+      projectID: this.project.projectID
+    }).then(() => {
       this.updateProjects()
-      this.newProject = {
-                          title: '',
-                          description: '',
-                          tech: '',
-                          type: '',
-                          duration: '',
-                          gitLink: '',
-                          link: '',
-                          indexLocation: '',
+      this.project = {
+                          title: '',            
+                          tech: '',          
+                          git: '',
+                          link: '',  
+                          pages: []  
                         }
     })
     
   },
   sumbitEdit() {
-    const formData = new FormData();
-    if(this.$refs.editProjectPoster.getFiles()[0]) {
-      formData.append('Poster', this.$refs.editProjectPoster.getFiles()[0].file)
-    }
-    
-    formData.append('Type', this.editor.type)
-    formData.append('Duration', this.editor.duration)
+    const formData = new FormData(); 
     formData.append('Title', this.editor.title)
-    formData.append('Description', this.editor.description)
-    formData.append('Git', this.editor.gitLink)
-    formData.append('OldGit', this.editor.oldGit)
-    formData.append('Index', this.editor.index)
+    formData.append('Git', this.editor.git)
     formData.append('Link', this.editor.link)
     formData.append('Tech', this.editor.tech.replace(' ', '').split(','))
     this.$store.dispatch(POST_EDIT, formData).then(() => {
       this.updateProjects()
-      this.showEditor = false
       this.editor = null
     })
   },
-	showSlide({title, tech, type, duration}) {
-    tech = tech.split(',').join(', ');
-    this.slideProps = {
-      title: title,
-      tech: tech, 
-      type: type, 
-      duration: duration,
-    }
-    this.infoSlideActive = true;
-  },
-  closeSlide() {
-    this.infoSlideActive = false;
-  },
   editProject(project) {
-    this.showEditor = true
-    this.editor = {
-      ...project,
-      oldGit: project.gitLink
+    this.editing = true
+    this.project = {
+      ...project
+    }
+    if(this.project.pages[0].name === "Home") {
+      this.project.pages.shift()
     }
   },
   deleteProject() {
-    this.showEditor = false
-    const formData = new FormData();
-    formData.append('git', this.editor.oldGit)
-    formData.append('Test', 'ttttttttttttt')
-    console.log(this.editor.oldGit)
-    this.$store.dispatch(POST_DELETE, formData).then(() => {
+    this.$store.dispatch(POST_DELETE, {
+      projectID: this.project.projectID
+    }).then(() => {
       this.updateProjects()
-      this.editor = null
+      this.editing = false,
+      this.project = {}
     })
     
-  },
-  updateProject() {
-    const formData = new FormData();
-    formData.append('git', this.editor.oldGit)
-    
-    this.$store.dispatch(POST_UPDATE, formData).then(() => {
-      this.updateProjects()
-      this.editor = null
-    })
   },
   cancelEdit() {
-  this.showEditor = false
-  this.editor = null
+  this.project = {
+
+  }
+  this.editing = false
 }
 },
 

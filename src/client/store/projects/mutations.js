@@ -1,7 +1,8 @@
 import { SET_PROJECTS } from './actions'
 export default {
   [SET_PROJECTS]: (state, data) => {
-    state.projects = data;
+
+    state.items = data;
   }
   
 }

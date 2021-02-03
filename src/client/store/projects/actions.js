@@ -8,37 +8,20 @@ export const SET_PROJECTS = 'SET_PROJECTS';
 export default {
   [POST_ADD]: ({ commit, rootState }, data) => {
     return new Promise((resolve, reject) => {
-      client.post('/projects/add', data, { headers: {'access_token': rootState.auth.token, 'Content-Type': 'multipart/form-data'} }).then((response) => {
+      client.post('/projects/add', data, { headers: {'access_token': rootState.auth.token} }).then((response) => {
         resolve(response)
       }).catch((error) => {
         reject(error)
       })
     })
   },
-  [POST_EDIT]: ({ commit, rootState }, data) => {
-    return new Promise((resolve, reject) => {
-      client.post('/projects/edit', data, { headers: {'access_token': rootState.auth.token, 'Content-Type': 'multipart/form-data'} }).then((response) => {
-        resolve(response)
-      }).catch((error) => {
-        reject(error)
-      })
-    })
-  },
+
   [POST_DELETE]: ({ commit, rootState }, data) => {
     return new Promise((resolve, reject) => {
-      client.post('/projects/delete', data, { headers: {'access_token': rootState.auth.token, 'Content-Type': 'multipart/form-data'} }).then((response) => {
+      client.post('/projects/delete', data, { headers: {'access_token': rootState.auth.token} }).then((response) => {
         resolve(response)
       }).catch((error) => {
         reject(error)
-      })
-    })
-  },
-  [POST_UPDATE]: ({ commit, rootState }, data) => {
-    return new Promise((resolve, reject) => {
-      client.post('/projects/update', data, { headers: { 'access_token': rootState.auth.token, 'Content-Type': 'multipart/form-data'} }).then((response) => {
-        resolve(response)
-      }).catch((err) => {
-        reject(err)
       })
     })
   },

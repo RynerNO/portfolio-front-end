@@ -34,7 +34,6 @@ import anime from 'animejs/lib/anime.es.js';
 import animatedBackground from '@components/AnimatedBackground.vue';
 import changePage from '@components/ChangePage.vue';
 
-import { MLBuilder } from 'vue-multilanguage'
 
 export default {
     meta() {

@@ -2,20 +2,14 @@ import mongoose from 'mongoose';
 
 const ProjectSchema = new mongoose.Schema({
   title: String,
-  description: String,
-  tech: String,
-  type: String,
-  index: {
-    type: String,
-    default: ''
-  },
+  tech: Array,
   link: {
     type: String,
     default: ''
   },
-  gitLink: String,
-  projectFolder: String,
-  duration: String,
+  git: String,
+  pages: Array,
+  projectID: String,
   createdAt: String,
   updatedAt: String,
 });

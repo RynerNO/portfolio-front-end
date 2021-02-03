@@ -9,7 +9,7 @@
               img(:src="`${filesLink}/poster.png`" alt="Project preview image")
             div(class="project__hover")
               div(class="project__bg")
-              button(class="project__btn" @click="$emit('click', {previewLink, filesLink})")
+              button(class="project__btn" @click="$emit('click', {filesLink})")
                 span {{ btnText }}
 </template>
 <script>
@@ -20,27 +20,19 @@ export default {
       type: String,
       required: true
       },
-    description: {
-      type: String,
-      required: false
-    },
     tech: {
-      type: String,
+      type: Array,
       required: true
     },
-    type: {
-      type: String,
-      required: true
-    },
-    projectFolder: {
-      type: String,
-      required: true
-    },
-    index: {
-      type: String,
+    pages: {
+      type: Array,
       required: true
     },
     link: {
+      type: String,
+      required: true
+    },
+    projectID: {
       type: String,
       required: true
     },
@@ -56,21 +48,8 @@ export default {
   },
   computed: {
     filesLink() {
-      return `https://ruiner.xyz/site_previews/${this.projectFolder}`
-    },
-    previewLink() {
-      if(this.link.length > 0) {
-        if(this.link.endsWith('/')) {
-          return `${this.link}${this.index}`
-        } else {
-          return `${this.link}/${this.index}`
-        }
-        
-      } else {
-        return `https://ruiner.xyz/site_previews/${this.projectFolder}/${this.index}`
-      }
+      return `posters/${this.projectID}`
     }
-
   },
 }
 </script>

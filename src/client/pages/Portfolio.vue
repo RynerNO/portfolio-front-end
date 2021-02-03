@@ -24,23 +24,15 @@
 				div(class="projectInfoText" class="col-span-3")
 					ul
 						li 
-							font-awesome(icon='file-alt')
-							span
-								|{{ $ml.get('portfolio').slide.project }}:&nbsp;{{ slideProps.type }}
-						li 
-							font-awesome(icon='hourglass')
-							span
-								|{{ $ml.get('portfolio').slide.duration }}:&nbsp;{{ slideProps.duration }}
-						li 
 							font-awesome(icon="file-code")
 							span
-								|{{ $ml.get('portfolio').slide.tech }}&nbsp;{{ slideProps.tech	}}
+								|{{ $ml.get('portfolio').slide.tech }}:&nbsp;{{ slideProps.tech.join(', ')	}}
 						li
 							font-awesome(:icon=['fab', 'github'])
 							span
 								|Github:&nbsp;
-								a(:href="slideProps.gitLink" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-500") {{ slideProps.title}}
-					a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`/preview/${slideProps.projectFolder}`")
+								a(:href="slideProps.git" target="_blank" rel="noopener noreferrer" class="underline cursor-pointer hover:text-blue-500") {{ slideProps.title}}
+					a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`/preview/${slideProps.projectID}`")
 						span
 							font-awesome(icon="external-link-alt") 
 							| {{ $ml.get('portfolio').buttons.preview }}
@@ -50,7 +42,6 @@
 
 <script>
 	import { GET_PROJECTS } from "@store/projects/actions";
-  import anime from 'animejs/lib/anime.es.js';
 	import changePage from '@components/ChangePage.vue';
 	import Project from '@components/Project.vue';
 export default {
@@ -68,14 +59,14 @@ export default {
         projects: [],
       infoSlideActive: false,
       slideProps: {
+        tech: []
       }
     }
       },
   methods: {
-      showSlide({previewLink, filesLink}, project) {
+      showSlide({ filesLink }, project) {
       this.slideProps = {
         ...project,
-        link: previewLink,
         filesLink
       }
       this.infoSlideActive = true;
@@ -86,7 +77,7 @@ export default {
   },
   created() {
 		this.$store.dispatch(GET_PROJECTS).then(()=> {
-		this.projects = this.$store.state.projects.projects
+		this.projects = this.$store.state.projects.items
 
 	})
 	}
