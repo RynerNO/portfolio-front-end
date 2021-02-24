@@ -1,0 +1,17 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,900&display=swap');
+body {
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    height: 100%;
+    background: #222;
+}
+html {
+    height: 100%;
+}

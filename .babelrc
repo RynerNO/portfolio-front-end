@@ -1,0 +1,33 @@
+{
+    "presets": [
+
+        "@babel/preset-env"
+
+    ],
+    "ignore": [
+        "./dist",
+        "/node_modules/",
+    ],
+    "plugins": [
+        ["module-resolver", {
+            "root": ["./"], 
+            "alias": {
+                "@mixins": "./src/mixins",
+                "@styles": "./src/styles",
+                "@assets": "./src/assets",
+                "@locales": "./src/locales",
+                "@utils": "./src/utils",
+                "@store": "./src/store",
+                "@directives": "./src/directives",
+                "@components": "./src/components",
+                "@pages": "./src/pages",
+                "@config": "./src/config.js"
+            }}
+        ],
+        ["@babel/plugin-transform-runtime",
+            {
+              "regenerator": true
+            }
+          ]
+    ]
+}
