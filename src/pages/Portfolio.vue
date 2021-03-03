@@ -32,7 +32,7 @@
 							span
 								|Github:&nbsp;
 								a(:href="slideProps.git" target="_blank" rel="noopener noreferrer" class="underline cursor-pointer hover:text-blue-500") {{ slideProps.title}}
-					a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`/preview/${slideProps.projectID}`")
+					a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`/preview/${slideProps.projectID}`" @click="openPreview")
 						span
 							font-awesome(icon="external-link-alt") 
 							| {{ $ml.get('portfolio').buttons.preview }}
@@ -64,6 +64,9 @@ export default {
     }
       },
   methods: {
+      openPreview() {
+        this.$gtag.event('openPreview', { method: 'Google' })
+      },
       showSlide({ filesLink }, project) {
       this.slideProps = {
         ...project,

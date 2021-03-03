@@ -13,7 +13,7 @@ module.exports = () => ({
   },
   output: {
     path: path.resolve(__dirname, 'dist/'),
-    filename: "[name].[chunkhash:6].bundle.js",
+    filename: "[name].[chunkhash:6].js",
     publicPath: "/",
   },
   module: {
@@ -98,8 +98,11 @@ module.exports = () => ({
     cleanAfterEveryBuildPatterns: ['!_redirects']
   }), new HtmlWebpackPlugin({
     template: './src/public/index.html',
-    inject: true
-  }), new MiniCssExtractPlugin(), new FaviconsWebpackPlugin({
+    inject: "body"
+  }), new MiniCssExtractPlugin({
+      filename: "css/[name].[fullhash:8].css",
+      chunkFilename: "css/[name].[fullhash:8].css"
+  }), new FaviconsWebpackPlugin({
     logo: './src/public/favicon.png',
     outputPath: "assets/"
   }),

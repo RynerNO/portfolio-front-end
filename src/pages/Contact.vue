@@ -114,6 +114,8 @@ export default {
       this.failCaptcha = false;
     },
     sendMessage(token) {
+
+      this.$gtag.event('sendMessage', { method: 'Google' })
       axios.post('mail/send', this.message).then(response => {
         this.$refs.observer.reset()
         this.message.name = '';

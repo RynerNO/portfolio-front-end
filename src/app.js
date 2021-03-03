@@ -19,7 +19,8 @@ import { faGithub, faSkype } from "@fortawesome/free-brands-svg-icons"
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add([faUser, faBriefcase, faFileAlt, faHourglass, faExternalLinkAlt, faTimes, faFileCode, faEnvelope, faComments, faPaperPlane, faHome, faGithub, faSkype, faChevronDown, faChevronUp])
 
- 
+import VueAnalytics from 'vue-gtag' 
+
 import store from '@store/store';
 
 
@@ -29,6 +30,12 @@ Vue.use(Meta, {
   keyName: 'meta'
 });
 
+Vue.use(VueAnalytics, {
+  config: {
+    id: 'G-2FWZ9C4XR3'
+  }
+  
+})
 
 Vue.component('font-awesome', FontAwesomeIcon)
 
