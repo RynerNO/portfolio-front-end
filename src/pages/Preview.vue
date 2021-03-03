@@ -1,11 +1,11 @@
 <template lang="pug">
 div(class="w-full h-full flex flex-col")
     div(class="pages-sidebar flex flex-col pt-3 w-full")
-        h1(class="text-white ml-2")  {{ $ml.get('preview').currentPage }}
+        h1(class="text-white ml-2 text-xl")  {{ $ml.get('preview').currentPage }}
           span(class="text-white ml-2") {{ currentPage.name }}
         ul(class="text-white self-center w-full mt-3 pagesNav")
           li(
-          class="cursor-pointer hover:bg-gray-800 w-full text-center capitalize" 
+          class="cursor-pointer hover:bg-gray-800 w-full text-center capitalize text-xl" 
           v-for="page in project.pages" 
           :key="page.name"
           :class="{ 'bg-gray-800': currentPage.name === page.name}"
