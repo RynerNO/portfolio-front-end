@@ -7,7 +7,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-module.exports = () => ({
+const { merge } = require('webpack-merge')
+let config = {
+  mode: 'development',
   entry: {
     app: './src/app.js'
   },
@@ -107,22 +109,7 @@ module.exports = () => ({
     outputPath: "assets/"
   }),
 ],
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all'
-        }
-      }
-    },
-    minimizer: [
-      `...`,
-      new CssMinimizerPlugin()
-    ]
-  },
+
   devServer: {
     contentBase: path.join(__dirname, 'src/dist'),
     publicPath: process.env.BASE_URL,
@@ -135,4 +122,19 @@ module.exports = () => ({
     },
     historyApiFallback: true,
   }
-});
+};
+
+if(process.env.PRODUCTION == "true") {
+  config = merge(config, {
+    mode: 'production',
+    optimization: {
+      minimizer: [
+        `...`,
+        new CssMinimizerPlugin()
+      ]
+    }
+  }
+  )
+}
+
+module.exports = config;
