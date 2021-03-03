@@ -8,18 +8,29 @@
 
 <script>
 import {CanvasSpace, Pt, Group, Line, Const} from 'pts';
-
 export default {
 data() {
   return {
-    animateBg: true
+    animateBg: true,
   }
 },
 beforeDestroy() {
   this.animateBg = false;
 },
 mounted() {
-this.floatySpace(new CanvasSpace('#pt'));
+  setTimeout(() => {
+    new Promise((resolve, reject) => {
+    const space = new CanvasSpace('#pt');
+    if(space) {
+      resolve(space)
+    }
+  }).then((space) => {
+    this.floatySpace(space);
+  })
+  }, 200)
+  
+
+
 
 },
 methods: {
