@@ -8,6 +8,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const { merge } = require('webpack-merge')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 let config = {
   mode: 'development',
   entry: {
@@ -15,7 +16,7 @@ let config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist/'),
-    filename: "[name].[chunkhash:6].js",
+    filename: "js/[name].[chunkhash:6].js",
     publicPath: "/",
   },
   module: {
@@ -86,7 +87,7 @@ let config = {
         ]
       },
       {
-        test: /\.(eot|woff|woff2|ttf|jpg|png|svg|webp)([\?]?.*)$/,
+        test: /\.(eot|woff|woff2|ttf|jpg|pdf|png|svg|webp)([\?]?.*)$/,
         use: {
           loader: 'file-loader',
           options: {
@@ -108,6 +109,7 @@ let config = {
     logo: './src/public/favicon.png',
     outputPath: "assets/"
   }),
+  new FriendlyErrorsWebpackPlugin()
 ],
 
   devServer: {

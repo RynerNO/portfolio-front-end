@@ -1,6 +1,6 @@
 <template>
 
-      <div id="pt" class="animated-background">
+      <div id="pt" class="animated-background" ref="ptsCont">
           
       </div>
 
@@ -18,16 +18,18 @@ beforeDestroy() {
   this.animateBg = false;
 },
 mounted() {
+   let space = new CanvasSpace('#pt');
+   this.floatySpace(space);
   setTimeout(() => {
-    new Promise((resolve, reject) => {
-    const space = new CanvasSpace('#pt');
-    if(space) {
-      resolve(space)
-    }
-  }).then((space) => {
+    if(window.innerWidth == space.size[0] && window.innerHeight == space.size[1]) return;
+    space.removeAll()
+    space.clear()
+    space.dispose()
+    space.element.remove()
+
+    space = new CanvasSpace('#pt');
     this.floatySpace(space);
-  })
-  }, 200)
+  }, 2000)
   
 
 
@@ -59,6 +61,7 @@ methods: {
         space.removeAll()
         space.clear()
         space.element.remove()
+        space.dispose()
         space = null;
         return 
       }

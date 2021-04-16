@@ -1,4 +1,4 @@
 export default {
-    API_ROUTE: "http://localhost:3000/api/v1",
-    STATIC_ROUTE: "http://localhost:3000"
+    API_ROUTE: "https://portfolio-ruiner.herokuapp.com/api/v1",
+    STATIC_ROUTE: "https://portfolio-ruiner.herokuapp.com/"
 }
