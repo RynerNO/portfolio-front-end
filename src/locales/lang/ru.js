@@ -2,7 +2,8 @@ import { MLanguage } from 'vue-multilanguage';
 export default new MLanguage('ru').create({
   home: {
     titles: ['\u00a0Андрей', '\u00a0начинающий разработчик'],
-    aboutMe: `Я Junior Front-End Developer.`,
+    aboutMe: `Я Junior Front-End Developer.
+    Профессионально занимаюсь веб-разработкой на протяжении 1 года.`,
     me: 'Я',
     greeting: 'Привет!',
     buttons: {

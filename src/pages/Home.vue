@@ -4,7 +4,7 @@
       button(class="flex m-1 p-2 text-xs md:text-md md:p-3 text-white rounded-md text-center outline-none capitalize focus:outline-none select-none" v-for="lang in $ml.list" :key="lang" @click="changeLang(lang)" v-text="lang" :class="{ 'bg-gray-700': $ml.current !== lang, 'bg-r-blue': $ml.current === lang }" )
     div(class="z-20 text")
       h3(class="uppercase font-secondary") {{ $ml.get('home').greeting }}
-      h1(class="uppercase font-primary flex") 
+      h1(class="uppercase font-primary flex changing-title") 
         span {{ $ml.get('home').me }}
         div 
           span(class="dynamicTitle overflow-hidden")
@@ -140,7 +140,8 @@ export default {
 .home
   width: 100vw
   height: 100vh
-
+  .changing-title
+    width: 550px
   .text
     max-width: 550px
     color: $primary_text
