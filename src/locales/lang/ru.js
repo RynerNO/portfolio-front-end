@@ -2,8 +2,7 @@ import { MLanguage } from 'vue-multilanguage';
 export default new MLanguage('ru').create({
   home: {
     titles: ['\u00a0Андрей', '\u00a0начинающий разработчик'],
-    aboutMe: `Я Junior Front-End Developer из Украины.
-    Профессионально занимаюсь веб-разработкой на протяжении 1 года.`,
+    aboutMe: `Я Junior Front-End Developer.`,
     me: 'Я',
     greeting: 'Привет!',
     buttons: {
@@ -16,7 +15,7 @@ export default new MLanguage('ru').create({
   },
   about: {
     title: ['Обо', 'мне'],
-    aboutMe: `Я Junior Front-End Developer Украины.
+    aboutMe: `Я Junior Front-End Developer.
     Проффессионально занимаюсь веб-разработкой на протяжении 1 года.
     Стремлюсь учлучшать свои навыки. Хорошо организован, быстро обучаюсь, внимателен к деталям.`,
     skillsTitle: 'Навыки',

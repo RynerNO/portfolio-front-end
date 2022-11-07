@@ -27,11 +27,11 @@
 							font-awesome(icon="file-code")
 							span
 								|{{ $ml.get('portfolio').slide.tech }}:&nbsp;{{ slideProps.tech.join(', ')	}}
-						li
-							font-awesome(:icon=['fab', 'github'])
-							span
-								|Github:&nbsp;
-								a(:href="slideProps.git" target="_blank" rel="noopener noreferrer" class="underline cursor-pointer hover:text-blue-500") {{ slideProps.title}}
+						//- li
+						//- 	font-awesome(:icon=['fab', 'github'])
+						//- 	span
+						//- 		|Github:&nbsp;
+						//- 		a(:href="slideProps.git" target="_blank" rel="noopener noreferrer" class="underline cursor-pointer hover:text-blue-500") {{ slideProps.title}}
 					a(class="previewButton" target="_blank" rel="noopener noreferrer" :href="`/preview/${slideProps.projectID}`" @click="openPreview")
 						span
 							font-awesome(icon="external-link-alt") 
